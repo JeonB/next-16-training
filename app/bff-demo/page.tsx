@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useTransition, useCallback } from "react";
+import { useState, useTransition, useOptimistic, type FormEvent } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { User, CreateUserInput, UpdateUserInput } from "@/lib/types/user";
 import {
   getUsersAction,
@@ -11,13 +12,24 @@ import {
 } from "@/lib/actions/user-actions";
 
 export default function BFFDemoPage() {
-  const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [isDetailLoading, setIsDetailLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [isPending, startTransition] = useTransition();
+  const queryClient = useQueryClient();
+  const {
+    data: usersResult,
+    isPending: isUsersPending,
+    isFetching: isFetchingUsers,
+    error: usersError,
+  } = useQuery({
+    queryKey: ["users", "list", searchTerm || "all"],
+    queryFn: () => getUsersAction(1, 10, searchTerm || undefined),
+  });
+  const baseUsers = usersResult?.users ?? [];
+  const [optimisticUsers, setOptimisticUsers] =
+    useOptimistic<User[]>(baseUsers);
   // 폼 상태
   const [formData, setFormData] = useState<CreateUserInput>({
     name: "",
@@ -27,83 +39,67 @@ export default function BFFDemoPage() {
   const [editFormData, setEditFormData] = useState<UpdateUserInput>({});
 
   // 사용자 목록 조회
-  const fetchUsers = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await getUsersAction(1, 10, searchTerm || undefined);
-      setUsers(result.users);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch users");
-    } finally {
-      setLoading(false);
-    }
-  }, [searchTerm]);
-
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+  const isUsersLoading = isUsersPending || isFetchingUsers;
+  const usersErrorMessage =
+    error ?? (usersError instanceof Error ? usersError.message : null);
 
   // 사용자 생성
-  const handleCreate = async (e: React.FormEvent) => {
+  const handleCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
+    setOptimisticUsers((prev: User[]) => [
+      ...prev,
+      {
+        ...formData,
+        role: formData.role as "admin" | "user" | "guest",
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      } as User,
+    ]);
     startTransition(async () => {
-      try {
-        const newUser = await createUserAction(formData);
-        setUsers([...users, newUser]);
-        setFormData({ name: "", email: "", role: "user" });
-        alert("사용자가 생성되었습니다!");
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to create user");
-      }
+      await createUserAction(formData);
+      await queryClient.invalidateQueries({
+        queryKey: ["users", "list"],
+        exact: false,
+      });
     });
+    setFormData({ name: "", email: "", role: "user" });
   };
 
   // 사용자 수정
-  const handleUpdate = async (e: React.FormEvent) => {
+  const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedUser) return;
 
-    setError(null);
+    setOptimisticUsers((prev: User[]) =>
+      prev.map((u: User) =>
+        u.id === selectedUser.id ? { ...u, ...editFormData } : u
+      )
+    );
     startTransition(async () => {
-      try {
-        const updatedUser = await updateUserAction(
-          selectedUser.id,
-          editFormData
-        );
-        setUsers(users.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
-        setSelectedUser(updatedUser);
-        setEditFormData({});
-        alert("사용자 정보가 수정되었습니다!");
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to update user");
-      }
+      await updateUserAction(selectedUser.id, editFormData);
+      await queryClient.invalidateQueries({
+        queryKey: ["users", "list"],
+        exact: false,
+      });
     });
   };
 
   // 사용자 삭제
   const handleDelete = async (id: string) => {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
-
-    setError(null);
+    setOptimisticUsers((prev: User[]) => prev.filter((u: User) => u.id !== id));
     startTransition(async () => {
-      try {
-        await deleteUserAction(id);
-        setUsers(users.filter((u) => u.id !== id));
-        if (selectedUser?.id === id) {
-          setSelectedUser(null);
-        }
-        alert("사용자가 삭제되었습니다!");
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to delete user");
-      }
+      await deleteUserAction(id);
+      await queryClient.invalidateQueries({
+        queryKey: ["users", "list"],
+        exact: false,
+      });
     });
   };
 
   // 사용자 선택
   const handleSelectUser = async (id: string) => {
-    setLoading(true);
+    setIsDetailLoading(true);
     setError(null);
     try {
       const user = await getUserByIdAction(id);
@@ -116,7 +112,7 @@ export default function BFFDemoPage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch user");
     } finally {
-      setLoading(false);
+      setIsDetailLoading(false);
     }
   };
 
@@ -132,9 +128,11 @@ export default function BFFDemoPage() {
           </p>
         </div>
 
-        {error && (
+        {usersErrorMessage && (
           <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg">
-            <p className="text-red-800 dark:text-red-200">{error}</p>
+            <p className="text-red-800 dark:text-red-200">
+              {usersErrorMessage}
+            </p>
           </div>
         )}
 
@@ -155,11 +153,11 @@ export default function BFFDemoPage() {
                 />
               </div>
 
-              {loading ? (
+              {isUsersLoading || isDetailLoading ? (
                 <p className="text-zinc-600 dark:text-zinc-400">로딩 중...</p>
               ) : (
                 <div className="space-y-2">
-                  {users.map((user) => (
+                  {optimisticUsers.map((user) => (
                     <div
                       key={user.id}
                       className="p-4 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer"
