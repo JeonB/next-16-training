@@ -363,25 +363,6 @@ body {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    circle at 50% 50%,
-    transparent 0%,
-    transparent 14%,
-    rgba(0, 255, 255, 0.4) 17%,
-    rgba(0, 255, 255, 0.7) 19%,
-    rgba(0, 255, 255, 0.3) 21%,
-    transparent 24%
-  );
-  mask-image: radial-gradient(circle, transparent 16%, black 52%);
-  -webkit-mask-image: radial-gradient(circle, transparent 16%, black 52%);
-  animation: ray-expand 2.5s ease-out infinite;
-  border-radius: 50%;
-}
-
-.burst-rays-effect::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
     ellipse 140% 90% at 50% 50%,
     transparent 0%,
     transparent 12%,
@@ -393,4 +374,5 @@ body {
   mask-image: radial-gradient(circle, transparent 18%, black 50%);
   -webkit-mask-image: radial-gradient(circle, transparent 18%, black 50%);
   animation: ray-expand 2.5s ease-out infinite;
+  border-radius: 50%;
 }

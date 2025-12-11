@@ -70,7 +70,8 @@ export async function PUT(
     usersStore[userIndex] = updatedUser;
 
     // 캐시 무효화
-    revalidateTag("users", "user-${id}");
+    revalidateTag("users", "max");
+    revalidateTag(`user-${id}`, "max");
     revalidatePath("/api/users");
     revalidatePath(`/api/users/${id}`);
 
@@ -106,7 +107,8 @@ export async function DELETE(
     usersStore.splice(userIndex, 1);
 
     // 캐시 무효화
-    revalidateTag("users", `user-${id}`);
+    revalidateTag("users", "max");
+    revalidateTag(`user-${id}`, "max");
     revalidatePath("/api/users");
 
     const response: ApiResponse<User> = {

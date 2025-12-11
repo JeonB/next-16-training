@@ -6,160 +6,183 @@ import type {
   UpdateUserInput,
   UserListResponse,
 } from "@/lib/types/user";
-import { revalidateTag, revalidatePath } from "next/cache";
+import { usersStore } from "@/lib/data/users-store";
+import { revalidatePath, revalidateTag } from "next/cache";
 
-/**
- * Server Actions를 통한 사용자 관리
- * BFF 패턴: Server Actions가 내부 API Route를 호출하여 데이터 처리
- */
+const USERS_TAG = "users";
+const USERS_LIST_TAG = "users-list";
 
-const API_BASE = "/api/users";
+export interface UserActionResult {
+  ok: boolean;
+  message?: string;
+}
 
-/**
- * 사용자 목록 조회
- */
-export async function getUsersAction(
+const notEmptyString = (value: FormDataEntryValue | null): value is string =>
+  typeof value === "string" && value.trim().length > 0;
+
+const toCreateInput = (formData: FormData): CreateUserInput | null => {
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const role = formData.get("role");
+
+  if (!notEmptyString(name) || !notEmptyString(email)) {
+    return null;
+  }
+
+  return {
+    name: name.trim(),
+    email: email.trim(),
+    role:
+      role && typeof role === "string"
+        ? (role as CreateUserInput["role"])
+        : "user",
+  };
+};
+
+const toUpdateInput = (formData: FormData): UpdateUserInput => {
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const role = formData.get("role");
+
+  const nextInput: UpdateUserInput = {};
+
+  if (notEmptyString(name)) nextInput.name = name.trim();
+  if (notEmptyString(email)) nextInput.email = email.trim();
+  if (role && typeof role === "string")
+    nextInput.role = role as UpdateUserInput["role"];
+
+  return nextInput;
+};
+
+const applySearch = (list: User[], search?: string) => {
+  if (!search) return list;
+  const lowered = search.toLowerCase();
+  return list.filter(
+    (user) =>
+      user.name.toLowerCase().includes(lowered) ||
+      user.email.toLowerCase().includes(lowered)
+  );
+};
+
+const revalidateBff = (id?: string) => {
+  revalidateTag(USERS_TAG, "max");
+  revalidateTag(USERS_LIST_TAG, "max");
+  if (id) {
+    revalidateTag(`user-${id}`, "max");
+  }
+  revalidatePath("/bff-demo");
+  revalidatePath("/api/users");
+};
+
+export async function getUsers(
   page: number = 1,
   limit: number = 10,
   search?: string
 ): Promise<UserListResponse> {
-  try {
-    const params = new URLSearchParams({
-      page: String(page),
-      limit: String(limit),
-    });
-    if (search) {
-      params.append("search", search);
-    }
+  const filtered = applySearch(usersStore, search);
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedUsers = filtered.slice(startIndex, endIndex);
 
-    const response = await fetch(`${API_BASE}?${params.toString()}`, {
-      method: "GET",
-      next: { tags: ["users"], revalidate: 60 },
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to fetch users");
-    }
-
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw error;
-  }
+  return {
+    users: paginatedUsers,
+    total: filtered.length,
+    page,
+    limit,
+  };
 }
 
-/**
- * 특정 사용자 조회
- */
-export async function getUserByIdAction(id: string): Promise<User> {
-  try {
-    const response = await fetch(`${API_BASE}/${id}`, {
-      method: "GET",
-      next: { tags: ["users", `user-${id}`], revalidate: 60 },
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to fetch user");
-    }
-
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    throw error;
+export async function getUserById(id: string): Promise<User> {
+  const user = usersStore.find((u) => u.id === id);
+  if (!user) {
+    throw new Error("User not found");
   }
+  return user;
 }
 
-/**
- * 새 사용자 생성
- */
-export async function createUserAction(input: CreateUserInput): Promise<User> {
-  try {
-    const response = await fetch(API_BASE, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(input),
-    });
+export async function createUserAction(
+  _prevState: UserActionResult,
+  formData: FormData
+): Promise<UserActionResult> {
+  const input = toCreateInput(formData);
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to create user");
-    }
-
-    const data = await response.json();
-
-    // 캐시 무효화
-    revalidateTag("users", "users-list");
-    revalidatePath("/bff-demo");
-
-    return data.data;
-  } catch (error) {
-    console.error("Error creating user:", error);
-    throw error;
+  if (!input) {
+    return { ok: false, message: "이름과 이메일은 필수입니다." };
   }
+
+  const isDuplicate = usersStore.some(
+    (user) => user.email.toLowerCase() === input.email.toLowerCase()
+  );
+  if (isDuplicate) {
+    return { ok: false, message: "이미 존재하는 이메일입니다." };
+  }
+
+  const newUser: User = {
+    id: crypto.randomUUID(),
+    name: input.name,
+    email: input.email,
+    role: input.role ?? "user",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  usersStore.push(newUser);
+  revalidateBff();
+
+  return { ok: true, message: "사용자가 생성되었습니다." };
 }
 
-/**
- * 사용자 정보 수정
- */
 export async function updateUserAction(
-  id: string,
-  input: UpdateUserInput
-): Promise<User> {
-  try {
-    const response = await fetch(`${API_BASE}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(input),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to update user");
-    }
-
-    const data = await response.json();
-
-    // 캐시 무효화
-    revalidateTag("users", "users-list");
-    revalidateTag(`user-${id}`, `user-${id}`);
-    revalidatePath("/bff-demo");
-    revalidatePath(`/bff-demo/${id}`);
-
-    return data.data;
-  } catch (error) {
-    console.error("Error updating user:", error);
-    throw error;
+  _prevState: UserActionResult,
+  formData: FormData
+): Promise<UserActionResult> {
+  const id = formData.get("id");
+  if (!notEmptyString(id)) {
+    return { ok: false, message: "사용자 ID가 없습니다." };
   }
+
+  const userIndex = usersStore.findIndex((u) => u.id === id);
+  if (userIndex === -1) {
+    return { ok: false, message: "사용자를 찾을 수 없습니다." };
+  }
+
+  const input = toUpdateInput(formData);
+
+  if (input.email && input.email !== usersStore[userIndex].email) {
+    const duplicate = usersStore.some(
+      (u) => u.email.toLowerCase() === input.email?.toLowerCase() && u.id !== id
+    );
+    if (duplicate) {
+      return { ok: false, message: "이미 존재하는 이메일입니다." };
+    }
+  }
+
+  usersStore[userIndex] = {
+    ...usersStore[userIndex],
+    ...input,
+    updatedAt: new Date().toISOString(),
+  };
+
+  revalidateBff(id);
+  return { ok: true, message: "사용자 정보를 수정했습니다." };
 }
 
-/**
- * 사용자 삭제
- */
-export async function deleteUserAction(id: string): Promise<void> {
-  try {
-    const response = await fetch(`${API_BASE}/${id}`, {
-      method: "DELETE",
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to delete user");
-    }
-
-    // 캐시 무효화
-    revalidateTag("users", "users-list");
-    revalidateTag(`user-${id}`, `user-${id}`);
-    revalidatePath("/bff-demo");
-  } catch (error) {
-    console.error("Error deleting user:", error);
-    throw error;
+export async function deleteUserAction(
+  _prevState: UserActionResult,
+  formData: FormData
+): Promise<UserActionResult> {
+  const id = formData.get("id");
+  if (!notEmptyString(id)) {
+    return { ok: false, message: "사용자 ID가 없습니다." };
   }
+
+  const userIndex = usersStore.findIndex((u) => u.id === id);
+  if (userIndex === -1) {
+    return { ok: false, message: "사용자를 찾을 수 없습니다." };
+  }
+
+  usersStore.splice(userIndex, 1);
+  revalidateBff(id);
+
+  return { ok: true, message: "사용자를 삭제했습니다." };
 }

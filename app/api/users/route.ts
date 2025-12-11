@@ -90,7 +90,8 @@ export async function POST(request: NextRequest) {
     usersStore.push(newUser);
 
     // 캐시 무효화
-    revalidateTag("users", "users-list");
+    revalidateTag("users", "max");
+    revalidateTag("users-list", "max");
 
     const response: ApiResponse<User> = {
       success: true,
