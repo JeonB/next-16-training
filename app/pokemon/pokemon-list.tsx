@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PokemonSpecies } from "./pokemon_type";
 
-function extractPokemonId(url: string): string {
+export function extractPokemonId(url: string): string {
   const parts = url.split("/").filter(Boolean);
   return parts[parts.length - 1] || "";
 }
@@ -19,7 +19,10 @@ function GachaSpinner({
   pokemonList: PokemonSpecies[];
   onComplete: (pokemon: PokemonSpecies) => void;
 }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Initialize with random index - component remounts each time, so this gives new random value
+  const [currentIndex, setCurrentIndex] = useState(() =>
+    pokemonList.length > 0 ? Math.floor(Math.random() * pokemonList.length) : 0
+  );
   const [isSpinning, setIsSpinning] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const startTimeRef = useRef<number | null>(null);
@@ -27,12 +30,22 @@ function GachaSpinner({
   useEffect(() => {
     if (!isSpinning) return;
 
-    if (startTimeRef.current === null) {
-      startTimeRef.current = Date.now();
+    // Reset startTimeRef when spinning starts
+    startTimeRef.current = Date.now();
+
+    // Preload more Pokemon images initially (20 images to cover 2 seconds)
+    const initialPreloadCount = 20;
+    const initialIndex = currentIndex;
+    for (let i = 0; i < initialPreloadCount && i < pokemonList.length; i++) {
+      const nextIndex = (initialIndex + i) % pokemonList.length;
+      const nextPokemon = pokemonList[nextIndex];
+      const nextPokemonId = extractPokemonId(nextPokemon.url);
+      const img = document.createElement("img");
+      img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${nextPokemonId}.png`;
     }
 
     const spinDuration = 2000;
-    const fastInterval = 50;
+    const fastInterval = 100;
 
     intervalRef.current = setInterval(() => {
       if (startTimeRef.current === null) return;
@@ -49,7 +62,18 @@ function GachaSpinner({
         return;
       }
 
-      setCurrentIndex((prev) => (prev + 1) % pokemonList.length);
+      setCurrentIndex((prev) => {
+        const nextIndex = (prev + 1) % pokemonList.length;
+        // Preload next 5 images ahead of current position
+        for (let i = 1; i <= 5 && i < pokemonList.length; i++) {
+          const preloadIndex = (nextIndex + i) % pokemonList.length;
+          const preloadPokemon = pokemonList[preloadIndex];
+          const preloadPokemonId = extractPokemonId(preloadPokemon.url);
+          const img = document.createElement("img");
+          img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${preloadPokemonId}.png`;
+        }
+        return nextIndex;
+      });
     }, fastInterval);
 
     return () => {
@@ -57,6 +81,7 @@ function GachaSpinner({
         clearInterval(intervalRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSpinning, pokemonList, onComplete]);
 
   if (pokemonList.length === 0) return null;
@@ -69,6 +94,7 @@ function GachaSpinner({
       <div className="relative w-full h-full flex items-center justify-center animate-gacha-spin">
         <div className="w-48 h-48 relative">
           <Image
+            key={pokemonId}
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`}
             alt={currentPokemon.name}
             fill
@@ -141,7 +167,7 @@ function RevealedPokemon({
       className="group relative transition-all duration-500 hover:scale-110"
     >
       {/* 시안색 광선 버스트 효과 */}
-      <div className="burst-rays-effect animate-burst-rays" />
+      <div className="burst-rays-effect animate-burst-rays pointer-events-none absolute inset-0 z-20 mix-blend-screen" />
 
       {/* 중앙 흰색 코어 펄스 효과 */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10">

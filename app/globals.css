@@ -369,6 +369,7 @@ body {
   -webkit-mask-image: radial-gradient(circle, transparent 10%, black 50%);
   animation: burst-rays 2s ease-in-out infinite;
   border-radius: 50%;
+  mix-blend-mode: screen;
 }
 
 .burst-rays-effect::before {
