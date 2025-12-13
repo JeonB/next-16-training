@@ -11,7 +11,12 @@ export default async function PokemonPage({
   const { pokemonId } = await params;
   const queryClient = getQueryClient();
 
-  void queryClient.prefetchQuery(pokemonOptions(pokemonId));
+  try {
+    await queryClient.prefetchQuery(pokemonOptions(pokemonId));
+  } catch {
+    // Prefetch 실패 시 클라이언트에서 재시도하도록 에러를 throw하지 않음
+    // 클라이언트의 useSuspenseQuery가 자동으로 재시도함
+  }
 
   return (
     <main className="min-h-screen">
