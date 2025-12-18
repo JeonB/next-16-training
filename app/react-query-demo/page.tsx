@@ -1,7 +1,7 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/components/providers/get-query-client";
 import { userListOptions } from "@/lib/queries/user-queries";
-import { UserList } from "./user-list";
+import { UserList } from "@/app/react-query-demo/user-list";
 
 /**
  * React Query 학습 예시 메인 페이지

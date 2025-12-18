@@ -3,8 +3,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { userListOptions } from "@/lib/queries/user-queries";
-import { UserForm } from "./user-form";
-import { UserDetail } from "./user-detail";
+import { UserForm } from "@/app/react-query-demo/user-form";
+import { UserDetail } from "@/app/react-query-demo/user-detail";
 import { Button } from "@/components/ui/button";
 import type { User } from "@/lib/types/user";
 

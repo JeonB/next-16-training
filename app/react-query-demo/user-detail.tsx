@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { userDetailOptions } from "@/lib/queries/user-queries";
-import { UserForm } from "./user-form";
+import { UserForm } from "@/app/react-query-demo/user-form";
 import { Button } from "@/components/ui/button";
 
 /**
