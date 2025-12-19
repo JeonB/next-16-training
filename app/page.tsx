@@ -23,6 +23,12 @@ export default function Home() {
         <Link className="text-blue-500" href="/revaliate-refresh">
           Revaliate Refresh
         </Link>
+        <Link className="text-blue-500" href="/react-query-demo">
+          React Query Demo
+        </Link>
+        <Link className="text-blue-500" href="/comparison">
+          Comparison
+        </Link>
       </main>
     </div>
   );
