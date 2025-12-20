@@ -12,7 +12,7 @@ import type { User } from "@/lib/types/user";
  * 사용자 리스트 컴포넌트
  * useQuery, 페이지네이션, 검색 기능 예시
  */
-export function UserList() {
+export function UserList({ initialData }: { initialData?: User[] }) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
