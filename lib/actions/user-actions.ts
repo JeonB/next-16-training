@@ -8,6 +8,7 @@ import type {
 } from "@/lib/types/user";
 import { usersStore } from "@/lib/data/users-store";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { apiGet } from "../utils/api-client";
 
 const USERS_TAG = "users";
 const USERS_LIST_TAG = "users-list";
@@ -73,6 +74,13 @@ const revalidateBff = (id?: string) => {
   revalidatePath("/bff-demo");
   revalidatePath("/api/users");
 };
+
+export async function getUserList(filters: { page: number; limit: number }) {
+  // 서버 액션에서 직접 데이터 페칭
+  return await apiGet<UserListResponse>(
+    `/api/users?page=${filters.page}&limit=${filters.limit}`
+  );
+}
 
 export async function getUsers(
   page: number = 1,
