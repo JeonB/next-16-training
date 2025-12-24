@@ -9,7 +9,12 @@ import {
   deleteUserMutationFn,
 } from "@/lib/queries/user-queries";
 import { Button } from "@/components/ui/button";
-import type { User, CreateUserInput, UpdateUserInput } from "@/lib/types/user";
+import type {
+  User,
+  CreateUserInput,
+  UpdateUserInput,
+  UserListResponse,
+} from "@/lib/types/user";
 
 interface UserFormProps {
   user?: User;
@@ -31,11 +36,25 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
     user?.role || "user"
   );
 
-  // 생성 뮤테이션
+  // 생성 뮤테이션 (옵티미스틱 업데이트 포함)
   const createMutation = useMutation({
     mutationFn: createUserMutationFn,
-    onSuccess: () => {
-      // 목록 쿼리 무효화하여 자동 리패치
+    onSuccess: (newUser) => {
+      // 모든 목록 쿼리에 새 유저 즉시 추가
+      queryClient.setQueriesData<UserListResponse>(
+        { queryKey: userKeys.lists() },
+        (old) => {
+          if (!old) return old;
+          // 첫 페이지에 새 유저 추가 (일반적으로 새로 생성된 항목은 첫 페이지에 표시)
+          const updatedUsers = [newUser, ...old.users];
+          return {
+            ...old,
+            users: updatedUsers,
+            total: old.total + 1,
+          };
+        }
+      );
+      // 백그라운드에서 최신 데이터 리패치 (데이터 일관성 보장)
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
       onSuccess?.();
     },
