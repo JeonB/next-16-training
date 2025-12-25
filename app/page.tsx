@@ -26,6 +26,12 @@ export default function Home() {
         <Link className="text-blue-500" href="/react-query-demo">
           React Query Demo
         </Link>
+        <Link className="text-blue-500" href="/react-query-basics">
+          React Query Basics (핵심 기본기)
+        </Link>
+        <Link className="text-blue-500" href="/react-19-demo">
+          React 19 Demo (주요 변경사항)
+        </Link>
         <Link className="text-blue-500" href="/comparison">
           Comparison
         </Link>
