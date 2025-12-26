@@ -32,6 +32,18 @@ export default function Home() {
         <Link className="text-blue-500" href="/react-19-demo">
           React 19 Demo (주요 변경사항)
         </Link>
+        <Link className="text-blue-500" href="/react-19-advanced">
+          React 19 Advanced (고급 패턴)
+        </Link>
+        <Link className="text-blue-500" href="/react-query-basics">
+          React Query Basics (핵심 기본기)
+        </Link>
+        <Link className="text-blue-500" href="/react-query-advanced">
+          React Query Advanced (고급 패턴)
+        </Link>
+        <Link className="text-blue-500" href="/nextjs-react-query">
+          Next.js & React Query 통합
+        </Link>
         <Link className="text-blue-500" href="/comparison">
           Comparison
         </Link>
