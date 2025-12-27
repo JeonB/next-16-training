@@ -41,6 +41,9 @@ export default function Home() {
         <Link className="text-blue-500" href="/react-query-advanced">
           React Query Advanced (고급 패턴)
         </Link>
+        <Link className="text-blue-500" href="/react-query-patterns">
+          React Query 실전 패턴
+        </Link>
         <Link className="text-blue-500" href="/nextjs-react-query">
           Next.js & React Query 통합
         </Link>
