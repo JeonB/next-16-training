@@ -8,7 +8,9 @@ import { use, Suspense, useState, createContext, useContext } from "react";
  */
 
 // Promise를 생성하는 함수 (실제 API 호출 시뮬레이션)
-function fetchUserData(userId: string): Promise<{ id: string; name: string; email: string }> {
+function fetchUserData(
+  userId: string
+): Promise<{ id: string; name: string; email: string }> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -21,19 +23,33 @@ function fetchUserData(userId: string): Promise<{ id: string; name: string; emai
 }
 
 // Context 생성
-const UserContext = createContext<Promise<{ id: string; name: string; email: string }> | null>(null);
+const UserContext = createContext<Promise<{
+  id: string;
+  name: string;
+  email: string;
+}> | null>(null);
 
 // use 훅으로 Promise 처리하는 컴포넌트
-function UserProfile({ userPromise }: { userPromise: Promise<{ id: string; name: string; email: string }> }) {
+function UserProfile({
+  userPromise,
+}: {
+  userPromise: Promise<{ id: string; name: string; email: string }>;
+}) {
   // use 훅으로 Promise를 직접 사용 (Suspense와 함께 작동)
   const user = use(userPromise);
 
   return (
     <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
       <h3 className="font-semibold mb-2">사용자 정보</h3>
-      <p><strong>ID:</strong> {user.id}</p>
-      <p><strong>이름:</strong> {user.name}</p>
-      <p><strong>이메일:</strong> {user.email}</p>
+      <p>
+        <strong>ID:</strong> {user.id}
+      </p>
+      <p>
+        <strong>이름:</strong> {user.name}
+      </p>
+      <p>
+        <strong>이메일:</strong> {user.email}
+      </p>
     </div>
   );
 }
@@ -51,9 +67,15 @@ function UserProfileFromContext() {
   return (
     <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
       <h3 className="font-semibold mb-2">Context에서 가져온 사용자 정보</h3>
-      <p><strong>ID:</strong> {user.id}</p>
-      <p><strong>이름:</strong> {user.name}</p>
-      <p><strong>이메일:</strong> {user.email}</p>
+      <p>
+        <strong>ID:</strong> {user.id}
+      </p>
+      <p>
+        <strong>이름:</strong> {user.name}
+      </p>
+      <p>
+        <strong>이메일:</strong> {user.email}
+      </p>
     </div>
   );
 }
@@ -71,7 +93,6 @@ function LoadingFallback() {
 
 export function UseHookDemo() {
   const [userId, setUserId] = useState("1");
-  const userPromise = fetchUserData(userId);
   const contextValue = fetchUserData("context-user");
 
   return (
@@ -116,11 +137,10 @@ export function UseHookDemo() {
 
       <div className="p-4 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
         <p className="text-sm">
-          <strong>주의:</strong> use 훅은 Promise나 Context를 인자로 받아야 합니다.
-          일반 값에 사용하면 에러가 발생합니다.
+          <strong>주의:</strong> use 훅은 Promise나 Context를 인자로 받아야
+          합니다. 일반 값에 사용하면 에러가 발생합니다.
         </p>
       </div>
     </div>
   );
 }
-
