@@ -39,24 +39,71 @@ export function UserForm({ user, onSuccess, onCancel }: UserFormProps) {
   // 생성 뮤테이션 (옵티미스틱 업데이트 포함)
   const createMutation = useMutation({
     mutationFn: createUserMutationFn,
-    onSuccess: (newUser) => {
-      // 모든 목록 쿼리에 새 유저 즉시 추가
+    // 옵티미스틱 업데이트: 서버 응답 전 UI에 즉시 반영
+    onMutate: async (input) => {
+      // 진행 중인 쿼리 취소
+      await queryClient.cancelQueries({ queryKey: userKeys.lists() });
+
+      // 이전 데이터 스냅샷 저장
+      const previousQueries = queryClient
+        .getQueriesData({ queryKey: userKeys.lists() })
+        .map(([queryKey, data]) => [queryKey, data] as const);
+
+      // 임시 유저 객체 생성 (서버 응답 전까지 사용)
+      const optimisticUser: User = {
+        id: `temp-${Date.now()}`, // 임시 ID
+        name: input.name,
+        email: input.email,
+        role: input.role || "user",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      // 옵티미스틱 업데이트: 모든 목록 쿼리에 새 유저 즉시 추가
       queryClient.setQueriesData<UserListResponse>(
         { queryKey: userKeys.lists() },
         (old) => {
           if (!old) return old;
-          // 첫 페이지에 새 유저 추가 (일반적으로 새로 생성된 항목은 첫 페이지에 표시)
-          const updatedUsers = [newUser, ...old.users];
+          // 첫 페이지에 새 유저 추가
           return {
             ...old,
-            users: updatedUsers,
+            users: [optimisticUser, ...old.users],
             total: old.total + 1,
           };
         }
       );
-      // 백그라운드에서 최신 데이터 리패치 (데이터 일관성 보장)
-      queryClient.invalidateQueries({ queryKey: userKeys.lists() });
+
+      // 롤백을 위한 컨텍스트 반환
+      return { previousQueries, optimisticUser };
+    },
+    // 서버 응답 후 실제 데이터로 교체
+    onSuccess: (newUser, _variables, context) => {
+      if (context?.optimisticUser) {
+        // 임시 유저를 실제 서버 응답 데이터로 교체
+        queryClient.setQueriesData<UserListResponse>(
+          { queryKey: userKeys.lists() },
+          (old) => {
+            if (!old) return old;
+            return {
+              ...old,
+              users: old.users.map((u) =>
+                u.id === context.optimisticUser.id ? newUser : u
+              ),
+            };
+          }
+        );
+      }
+      // invalidateQueries 제거: setQueryData로 이미 업데이트했으므로 불필요
+      // 백그라운드 리패치는 하지 않음 (옵티미스틱 업데이트 유지)
       onSuccess?.();
+    },
+    // 에러 발생 시 롤백
+    onError: (_error, _variables, context) => {
+      if (context?.previousQueries) {
+        context.previousQueries.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
     },
   });
 
