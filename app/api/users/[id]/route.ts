@@ -20,7 +20,7 @@ import { usersStore } from "@/lib/data/users-store";
  * 특정 사용자 조회
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -51,12 +51,12 @@ export async function GET(
  * 사용자 정보 수정
  */
 export async function PUT(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const body: UpdateUserInput = await request.json();
+    const body: UpdateUserInput = await _request.json();
 
     const userIndex = usersStore.findIndex((u) => u.id === id);
 
@@ -118,7 +118,7 @@ export async function PUT(
  * 사용자 삭제
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {

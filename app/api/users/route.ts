@@ -7,7 +7,6 @@ import type {
 } from "@/lib/types/user";
 import { createErrorResponse } from "@/lib/utils/api-error";
 import {
-  createRouteHandlerError,
   createValidationError,
   createDuplicateEmailError,
 } from "@/lib/utils/error-handler";
