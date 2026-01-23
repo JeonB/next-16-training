@@ -5,7 +5,21 @@ import type {
   UserListResponse,
   ApiResponse,
 } from "@/lib/types/user";
-import { createErrorResponse, createApiError } from "@/lib/utils/api-error";
+import { createErrorResponse } from "@/lib/utils/api-error";
+import {
+  createRouteHandlerError,
+  createValidationError,
+  createDuplicateEmailError,
+} from "@/lib/utils/error-handler";
+import {
+  applySearch,
+  applyPagination,
+  validateEmailUniqueness,
+  generateUserId,
+  isValidEmail,
+  isValidName,
+  isValidRole,
+} from "@/lib/utils/user-helpers";
 import { revalidateTag } from "next/cache";
 import { usersStore } from "@/lib/data/users-store";
 
@@ -18,22 +32,13 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "10", 10);
-    const search = searchParams.get("search") || "";
+    const search = searchParams.get("search") || undefined;
 
     // 검색 필터링
-    let filteredUsers = usersStore;
-    if (search) {
-      filteredUsers = usersStore.filter(
-        (user) =>
-          user.name.toLowerCase().includes(search.toLowerCase()) ||
-          user.email.toLowerCase().includes(search.toLowerCase())
-      );
-    }
+    const filteredUsers = applySearch(usersStore, search);
 
     // 페이지네이션
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
+    const paginatedUsers = applyPagination(filteredUsers, page, limit);
 
     const response: ApiResponse<UserListResponse> = {
       success: true,
@@ -65,23 +70,32 @@ export async function POST(request: NextRequest) {
 
     // 입력 검증
     if (!body.name || !body.email) {
-      throw createApiError(
-        400,
-        "Name and email are required",
-        "VALIDATION_ERROR"
-      );
+      throw createValidationError("name/email", "Name and email are required");
+    }
+
+    if (!isValidName(body.name)) {
+      throw createValidationError("name", "Name must be between 1 and 100 characters");
+    }
+
+    if (!isValidEmail(body.email)) {
+      throw createValidationError("email", "Invalid email format");
+    }
+
+    // 역할 검증
+    if (body.role && !isValidRole(body.role)) {
+      throw createValidationError("role", "Invalid role");
     }
 
     // 이메일 중복 확인
-    if (usersStore.some((user) => user.email === body.email)) {
-      throw createApiError(409, "Email already exists", "DUPLICATE_EMAIL");
+    if (!validateEmailUniqueness(body.email, usersStore)) {
+      throw createDuplicateEmailError();
     }
 
-    // 새 사용자 생성
+    // 새 사용자 생성 (ID 생성 로직 통일)
     const newUser: User = {
-      id: String(usersStore.length + 1),
-      name: body.name,
-      email: body.email,
+      id: generateUserId(),
+      name: body.name.trim(),
+      email: body.email.trim(),
       role: body.role || "user",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

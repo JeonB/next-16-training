@@ -1,6 +1,17 @@
 import { NextRequest } from "next/server";
 import type { User, UpdateUserInput, ApiResponse } from "@/lib/types/user";
-import { createErrorResponse, createApiError } from "@/lib/utils/api-error";
+import { createErrorResponse } from "@/lib/utils/api-error";
+import {
+  createUserNotFoundError,
+  createDuplicateEmailError,
+  createValidationError,
+} from "@/lib/utils/error-handler";
+import {
+  validateEmailUniqueness,
+  isValidEmail,
+  isValidName,
+  isValidRole,
+} from "@/lib/utils/user-helpers";
 import { revalidateTag, revalidatePath } from "next/cache";
 import { usersStore } from "@/lib/data/users-store";
 
@@ -17,7 +28,7 @@ export async function GET(
     const user = usersStore.find((u) => u.id === id);
 
     if (!user) {
-      throw createApiError(404, "User not found", "USER_NOT_FOUND");
+      throw createUserNotFoundError();
     }
 
     const response: ApiResponse<User> = {
@@ -50,20 +61,35 @@ export async function PUT(
     const userIndex = usersStore.findIndex((u) => u.id === id);
 
     if (userIndex === -1) {
-      throw createApiError(404, "User not found", "USER_NOT_FOUND");
+      throw createUserNotFoundError();
+    }
+
+    // 입력 검증
+    if (body.name && !isValidName(body.name)) {
+      throw createValidationError("name", "Name must be between 1 and 100 characters");
+    }
+
+    if (body.email && !isValidEmail(body.email)) {
+      throw createValidationError("email", "Invalid email format");
+    }
+
+    if (body.role && !isValidRole(body.role)) {
+      throw createValidationError("role", "Invalid role");
     }
 
     // 이메일 변경 시 중복 확인
     if (body.email && body.email !== usersStore[userIndex].email) {
-      if (usersStore.some((u) => u.email === body.email && u.id !== id)) {
-        throw createApiError(409, "Email already exists", "DUPLICATE_EMAIL");
+      if (!validateEmailUniqueness(body.email, usersStore, id)) {
+        throw createDuplicateEmailError();
       }
     }
 
     // 사용자 정보 업데이트
     const updatedUser: User = {
       ...usersStore[userIndex],
-      ...body,
+      ...(body.name && { name: body.name.trim() }),
+      ...(body.email && { email: body.email.trim() }),
+      ...(body.role && { role: body.role }),
       updatedAt: new Date().toISOString(),
     };
 
@@ -100,7 +126,7 @@ export async function DELETE(
     const userIndex = usersStore.findIndex((u) => u.id === id);
 
     if (userIndex === -1) {
-      throw createApiError(404, "User not found", "USER_NOT_FOUND");
+      throw createUserNotFoundError();
     }
 
     const deletedUser = usersStore[userIndex];

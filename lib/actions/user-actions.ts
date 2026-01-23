@@ -9,6 +9,21 @@ import type {
 import { usersStore } from "@/lib/data/users-store";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { apiGet } from "../utils/api-client";
+import {
+  applySearch,
+  applyPagination,
+  validateEmailUniqueness,
+  generateUserId,
+  isValidEmail,
+  isValidName,
+  isValidRole,
+} from "../utils/user-helpers";
+import {
+  createServerActionError,
+  createValidationError,
+  createDuplicateEmailError,
+  createUserNotFoundError,
+} from "../utils/error-handler";
 
 const USERS_TAG = "users";
 const USERS_LIST_TAG = "users-list";
@@ -18,7 +33,9 @@ export interface UserActionResult {
   message?: string;
 }
 
-const notEmptyString = (value: FormDataEntryValue | null): value is string =>
+const notEmptyString = (
+  value: FormDataEntryValue | null
+): value is string =>
   typeof value === "string" && value.trim().length > 0;
 
 const toCreateInput = (formData: FormData): CreateUserInput | null => {
@@ -30,12 +47,24 @@ const toCreateInput = (formData: FormData): CreateUserInput | null => {
     return null;
   }
 
+  const trimmedName = name.trim();
+  const trimmedEmail = email.trim();
+
+  // 입력 검증
+  if (!isValidName(trimmedName)) {
+    return null;
+  }
+
+  if (!isValidEmail(trimmedEmail)) {
+    return null;
+  }
+
   return {
-    name: name.trim(),
-    email: email.trim(),
+    name: trimmedName,
+    email: trimmedEmail,
     role:
-      role && typeof role === "string"
-        ? (role as CreateUserInput["role"])
+      role && typeof role === "string" && isValidRole(role)
+        ? role
         : "user",
   };
 };
@@ -47,22 +76,25 @@ const toUpdateInput = (formData: FormData): UpdateUserInput => {
 
   const nextInput: UpdateUserInput = {};
 
-  if (notEmptyString(name)) nextInput.name = name.trim();
-  if (notEmptyString(email)) nextInput.email = email.trim();
-  if (role && typeof role === "string")
-    nextInput.role = role as UpdateUserInput["role"];
+  if (notEmptyString(name)) {
+    const trimmedName = name.trim();
+    if (isValidName(trimmedName)) {
+      nextInput.name = trimmedName;
+    }
+  }
+
+  if (notEmptyString(email)) {
+    const trimmedEmail = email.trim();
+    if (isValidEmail(trimmedEmail)) {
+      nextInput.email = trimmedEmail;
+    }
+  }
+
+  if (role && typeof role === "string" && isValidRole(role)) {
+    nextInput.role = role;
+  }
 
   return nextInput;
-};
-
-const applySearch = (list: User[], search?: string) => {
-  if (!search) return list;
-  const lowered = search.toLowerCase();
-  return list.filter(
-    (user) =>
-      user.name.toLowerCase().includes(lowered) ||
-      user.email.toLowerCase().includes(lowered)
-  );
 };
 
 const revalidateBff = (id?: string) => {
@@ -88,9 +120,7 @@ export async function getUsers(
   search?: string
 ): Promise<UserListResponse> {
   const filtered = applySearch(usersStore, search);
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-  const paginatedUsers = filtered.slice(startIndex, endIndex);
+  const paginatedUsers = applyPagination(filtered, page, limit);
 
   return {
     users: paginatedUsers,
@@ -103,7 +133,7 @@ export async function getUsers(
 export async function getUserById(id: string): Promise<User> {
   const user = usersStore.find((u) => u.id === id);
   if (!user) {
-    throw new Error("User not found");
+    throw createUserNotFoundError();
   }
   return user;
 }
@@ -112,85 +142,105 @@ export async function createUserAction(
   _prevState: UserActionResult,
   formData: FormData
 ): Promise<UserActionResult> {
-  const input = toCreateInput(formData);
+  try {
+    const input = toCreateInput(formData);
 
-  if (!input) {
-    return { ok: false, message: "이름과 이메일은 필수입니다." };
+    if (!input) {
+      return createServerActionError(
+        createValidationError("name/email", "이름과 이메일은 필수이며 올바른 형식이어야 합니다.")
+      );
+    }
+
+    if (!validateEmailUniqueness(input.email, usersStore)) {
+      return createServerActionError(createDuplicateEmailError());
+    }
+
+    const newUser: User = {
+      id: generateUserId(),
+      name: input.name,
+      email: input.email,
+      role: input.role ?? "user",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    usersStore.push(newUser);
+    revalidateBff();
+
+    return { ok: true, message: "사용자가 생성되었습니다." };
+  } catch (error) {
+    return createServerActionError(error, "사용자 생성 중 오류가 발생했습니다.");
   }
-
-  const isDuplicate = usersStore.some(
-    (user) => user.email.toLowerCase() === input.email.toLowerCase()
-  );
-  if (isDuplicate) {
-    return { ok: false, message: "이미 존재하는 이메일입니다." };
-  }
-
-  const newUser: User = {
-    id: crypto.randomUUID(),
-    name: input.name,
-    email: input.email,
-    role: input.role ?? "user",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-
-  usersStore.push(newUser);
-  revalidateBff();
-
-  return { ok: true, message: "사용자가 생성되었습니다." };
 }
 
 export async function updateUserAction(
   _prevState: UserActionResult,
   formData: FormData
 ): Promise<UserActionResult> {
-  const id = formData.get("id");
-  if (!notEmptyString(id)) {
-    return { ok: false, message: "사용자 ID가 없습니다." };
-  }
-
-  const userIndex = usersStore.findIndex((u) => u.id === id);
-  if (userIndex === -1) {
-    return { ok: false, message: "사용자를 찾을 수 없습니다." };
-  }
-
-  const input = toUpdateInput(formData);
-
-  if (input.email && input.email !== usersStore[userIndex].email) {
-    const duplicate = usersStore.some(
-      (u) => u.email.toLowerCase() === input.email?.toLowerCase() && u.id !== id
-    );
-    if (duplicate) {
-      return { ok: false, message: "이미 존재하는 이메일입니다." };
+  try {
+    const id = formData.get("id");
+    if (!notEmptyString(id)) {
+      return createServerActionError(
+        createValidationError("id", "사용자 ID가 없습니다.")
+      );
     }
+
+    const userIndex = usersStore.findIndex((u) => u.id === id);
+    if (userIndex === -1) {
+      return createServerActionError(createUserNotFoundError());
+    }
+
+    const input = toUpdateInput(formData);
+
+    // 입력값이 없는 경우
+    if (Object.keys(input).length === 0) {
+      return createServerActionError(
+        createValidationError("input", "수정할 정보가 없습니다.")
+      );
+    }
+
+    // 이메일 변경 시 중복 검사
+    if (input.email && input.email !== usersStore[userIndex].email) {
+      if (!validateEmailUniqueness(input.email, usersStore, id)) {
+        return createServerActionError(createDuplicateEmailError());
+      }
+    }
+
+    usersStore[userIndex] = {
+      ...usersStore[userIndex],
+      ...input,
+      updatedAt: new Date().toISOString(),
+    };
+
+    revalidateBff(id);
+    return { ok: true, message: "사용자 정보를 수정했습니다." };
+  } catch (error) {
+    return createServerActionError(error, "사용자 수정 중 오류가 발생했습니다.");
   }
-
-  usersStore[userIndex] = {
-    ...usersStore[userIndex],
-    ...input,
-    updatedAt: new Date().toISOString(),
-  };
-
-  revalidateBff(id);
-  return { ok: true, message: "사용자 정보를 수정했습니다." };
 }
 
 export async function deleteUserAction(
   _prevState: UserActionResult,
   formData: FormData
 ): Promise<UserActionResult> {
-  const id = formData.get("id");
-  if (!notEmptyString(id)) {
-    return { ok: false, message: "사용자 ID가 없습니다." };
+  try {
+    const id = formData.get("id");
+    if (!notEmptyString(id)) {
+      return createServerActionError(
+        createValidationError("id", "사용자 ID가 없습니다.")
+      );
+    }
+
+    const userIndex = usersStore.findIndex((u) => u.id === id);
+    if (userIndex === -1) {
+      return createServerActionError(createUserNotFoundError());
+    }
+
+    usersStore.splice(userIndex, 1);
+    revalidateBff(id);
+
+    return { ok: true, message: "사용자를 삭제했습니다." };
+  } catch (error) {
+    return createServerActionError(error, "사용자 삭제 중 오류가 발생했습니다.");
   }
-
-  const userIndex = usersStore.findIndex((u) => u.id === id);
-  if (userIndex === -1) {
-    return { ok: false, message: "사용자를 찾을 수 없습니다." };
-  }
-
-  usersStore.splice(userIndex, 1);
-  revalidateBff(id);
-
-  return { ok: true, message: "사용자를 삭제했습니다." };
 }
