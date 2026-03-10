@@ -16,15 +16,15 @@ export async function ServerDataComponent() {
   };
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="text-lg font-semibold mb-2">{serverData.title}</h3>
-      <p className="text-gray-600 dark:text-gray-300 mb-2">{serverData.description}</p>
+      <p className="text-gray-600 mb-2">{serverData.description}</p>
       <div className="text-sm text-muted-foreground space-y-1">
         <p>Timestamp: {serverData.timestamp}</p>
         <p>서버 시간: {serverData.serverTime}</p>
       </div>
-      <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950 rounded">
-        <p className="text-sm text-blue-700 dark:text-blue-300">
+      <div className="mt-4 p-3 bg-blue-50 rounded">
+        <p className="text-sm text-blue-700">
           ✅ 이 컴포넌트는 서버에서 렌더링되어 JavaScript 번들에 포함되지 않습니다.
         </p>
       </div>

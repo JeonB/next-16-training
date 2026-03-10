@@ -9,7 +9,7 @@ import { ClientInteractiveComponent } from "./client-interactive-component";
 export function ServerClientIntegrationDemo() {
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Server & Client Components 통합 패턴:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>Server Components:</strong> 서버에서 렌더링, 데이터베이스/API 직접 접근 가능</li>
@@ -32,7 +32,7 @@ export function ServerClientIntegrationDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">최적화 전략:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>가능한 많은 것을 Server Component로 처리</li>

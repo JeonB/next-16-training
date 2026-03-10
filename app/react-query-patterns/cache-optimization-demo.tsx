@@ -38,9 +38,9 @@ function ArticleWithDefaultSettings({ articleId }: { articleId: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
       </div>
     );
   }
@@ -48,12 +48,12 @@ function ArticleWithDefaultSettings({ articleId }: { articleId: number }) {
   if (!data) return null;
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-semibold">{data.title}</h3>
         {isFetching && <span className="text-xs text-blue-500">리페치 중...</span>}
       </div>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{data.content}</p>
+      <p className="text-sm text-gray-600 mb-2">{data.content}</p>
       <p className="text-xs text-muted-foreground">
         조회수: {data.views} | 업데이트: {new Date(dataUpdatedAt).toLocaleTimeString()}
       </p>
@@ -75,9 +75,9 @@ function ArticleWithLongStaleTime({ articleId }: { articleId: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
       </div>
     );
   }
@@ -85,12 +85,12 @@ function ArticleWithLongStaleTime({ articleId }: { articleId: number }) {
   if (!data) return null;
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-semibold">{data.title}</h3>
         {isFetching && <span className="text-xs text-blue-500">리페치 중...</span>}
       </div>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{data.content}</p>
+      <p className="text-sm text-gray-600 mb-2">{data.content}</p>
       <p className="text-xs text-muted-foreground">
         조회수: {data.views} | 업데이트: {new Date(dataUpdatedAt).toLocaleTimeString()}
       </p>
@@ -112,9 +112,9 @@ function ArticleWithShortStaleTime({ articleId }: { articleId: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
       </div>
     );
   }
@@ -122,12 +122,12 @@ function ArticleWithShortStaleTime({ articleId }: { articleId: number }) {
   if (!data) return null;
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-semibold">{data.title}</h3>
         {isFetching && <span className="text-xs text-blue-500">리페치 중...</span>}
       </div>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{data.content}</p>
+      <p className="text-sm text-gray-600 mb-2">{data.content}</p>
       <p className="text-xs text-muted-foreground">
         조회수: {data.views} | 업데이트: {new Date(dataUpdatedAt).toLocaleTimeString()}
       </p>
@@ -152,14 +152,14 @@ export function CacheOptimizationDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">캐시 최적화 전략:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">staleTime</code>: 데이터가 fresh로 유지되는 시간</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">gcTime</code>: 캐시가 메모리에 유지되는 시간 (이전 cacheTime)</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">refetchOnWindowFocus</code>: Window focus 시 refetch 여부</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">refetchInterval</code>: 자동 refetch 간격</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">refetchOnMount</code>: 컴포넌트 마운트 시 refetch 여부</li>
+          <li><code className="bg-white px-1 rounded">staleTime</code>: 데이터가 fresh로 유지되는 시간</li>
+          <li><code className="bg-white px-1 rounded">gcTime</code>: 캐시가 메모리에 유지되는 시간 (이전 cacheTime)</li>
+          <li><code className="bg-white px-1 rounded">refetchOnWindowFocus</code>: Window focus 시 refetch 여부</li>
+          <li><code className="bg-white px-1 rounded">refetchInterval</code>: 자동 refetch 간격</li>
+          <li><code className="bg-white px-1 rounded">refetchOnMount</code>: 컴포넌트 마운트 시 refetch 여부</li>
         </ul>
       </div>
 
@@ -208,7 +208,7 @@ export function CacheOptimizationDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">전략 선택 가이드:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>정적 데이터:</strong> 긴 staleTime (예: 30분), refetchOnWindowFocus: false</li>

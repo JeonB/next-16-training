@@ -25,7 +25,7 @@ function DataDisplay({ dataPromise }: { dataPromise: Promise<{ data: string; tim
   const result = use(dataPromise);
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <p className="font-semibold">{result.data}</p>
       <p className="text-xs text-muted-foreground mt-1">
         로드 시간: {new Date(result.timestamp).toLocaleTimeString()}
@@ -37,7 +37,7 @@ function DataDisplay({ dataPromise }: { dataPromise: Promise<{ data: string; tim
 // 로딩 Fallback
 function LoadingFallback({ label }: { label: string }) {
   return (
-    <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
+    <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
       <div className="flex items-center space-x-2">
         <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
         <span className="text-sm text-muted-foreground">{label} 로딩 중...</span>
@@ -62,7 +62,7 @@ export function ConcurrentFeaturesDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Concurrent Features의 장점:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>여러 작업을 동시에 처리 가능</li>
@@ -81,7 +81,7 @@ export function ConcurrentFeaturesDemo() {
             className={`px-4 py-2 rounded-md ${
               tab === "tab1"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                : "bg-gray-200 text-gray-700"
             }`}
           >
             Tab 1
@@ -91,7 +91,7 @@ export function ConcurrentFeaturesDemo() {
             className={`px-4 py-2 rounded-md ${
               tab === "tab2"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                : "bg-gray-200 text-gray-700"
             }`}
           >
             Tab 2
@@ -101,7 +101,7 @@ export function ConcurrentFeaturesDemo() {
             className={`px-4 py-2 rounded-md ${
               tab === "tab3"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                : "bg-gray-200 text-gray-700"
             }`}
           >
             Tab 3
@@ -117,7 +117,7 @@ export function ConcurrentFeaturesDemo() {
         </p>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">Concurrent Features 활용:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>탭 전환 시 이전 탭 데이터 유지</li>

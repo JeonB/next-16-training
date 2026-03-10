@@ -53,10 +53,10 @@ function UserProfileWithSuspense({ userId }: { userId: number }) {
 
   // useSuspenseQuery는 항상 data가 존재 (로딩 상태는 Suspense fallback에서 처리)
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="text-lg font-semibold mb-2">{user.name}</h3>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">{user.email}</p>
-      <p className="text-sm text-gray-700 dark:text-gray-200">{user.bio}</p>
+      <p className="text-sm text-gray-600 mb-1">{user.email}</p>
+      <p className="text-sm text-gray-700">{user.bio}</p>
     </div>
   );
 }
@@ -70,17 +70,17 @@ function UserProfileTraditional({ userId }: { userId: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
       </div>
     );
   }
 
   if (isError || !user) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">
           {error instanceof Error ? error.message : "에러 발생"}
         </p>
       </div>
@@ -88,10 +88,10 @@ function UserProfileTraditional({ userId }: { userId: number }) {
   }
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="text-lg font-semibold mb-2">{user.name}</h3>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">{user.email}</p>
-      <p className="text-sm text-gray-700 dark:text-gray-200">{user.bio}</p>
+      <p className="text-sm text-gray-600 mb-1">{user.email}</p>
+      <p className="text-sm text-gray-700">{user.bio}</p>
     </div>
   );
 }
@@ -104,13 +104,13 @@ function UserPostsWithSuspense({ userId }: { userId: number }) {
   });
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="font-semibold mb-3">게시글 목록:</h3>
       <ul className="space-y-2">
         {posts.map((post) => (
-          <li key={post.id} className="p-3 border rounded bg-gray-50 dark:bg-gray-900">
+          <li key={post.id} className="p-3 border rounded bg-gray-50">
             <h4 className="font-medium">{post.title}</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{post.body}</p>
+            <p className="text-sm text-gray-600 mt-1">{post.body}</p>
           </li>
         ))}
       </ul>
@@ -121,7 +121,7 @@ function UserPostsWithSuspense({ userId }: { userId: number }) {
 // 로딩 Fallback 컴포넌트
 function LoadingFallback({ message = "로딩 중..." }: { message?: string }) {
   return (
-    <div className="p-8 border rounded-lg bg-gray-50 dark:bg-gray-900">
+    <div className="p-8 border rounded-lg bg-gray-50">
       <div className="flex items-center justify-center space-x-2">
         <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
         <span className="text-muted-foreground">{message}</span>
@@ -135,7 +135,7 @@ export function SuspenseIntegrationDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useSuspenseQuery의 특징:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>로딩 상태를 Suspense fallback에서 처리 (더 선언적)</li>
@@ -195,7 +195,7 @@ export function SuspenseIntegrationDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">언제 사용하나요?</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>useSuspenseQuery:</strong> React 18+, Suspense 사용 가능한 환경</li>

@@ -67,10 +67,10 @@ export function InfiniteQueriesDemo() {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
         <div className="space-y-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div key={i} className="h-20 bg-gray-200 rounded"></div>
           ))}
         </div>
       </div>
@@ -79,8 +79,8 @@ export function InfiniteQueriesDemo() {
 
   if (isError) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">
           에러 발생: {error instanceof Error ? error.message : "Unknown error"}
         </p>
       </div>
@@ -89,15 +89,15 @@ export function InfiniteQueriesDemo() {
 
   return (
     <div className="space-y-4">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useInfiniteQuery의 주요 속성:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">data.pages</code>: 각 페이지의 데이터 배열</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">fetchNextPage</code>: 다음 페이지 가져오기</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">hasNextPage</code>: 다음 페이지 존재 여부</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isFetchingNextPage</code>: 다음 페이지 로딩 중</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">getNextPageParam</code>: 다음 페이지 파라미터 계산 함수</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">initialPageParam</code>: 초기 페이지 파라미터</li>
+          <li><code className="bg-white px-1 rounded">data.pages</code>: 각 페이지의 데이터 배열</li>
+          <li><code className="bg-white px-1 rounded">fetchNextPage</code>: 다음 페이지 가져오기</li>
+          <li><code className="bg-white px-1 rounded">hasNextPage</code>: 다음 페이지 존재 여부</li>
+          <li><code className="bg-white px-1 rounded">isFetchingNextPage</code>: 다음 페이지 로딩 중</li>
+          <li><code className="bg-white px-1 rounded">getNextPageParam</code>: 다음 페이지 파라미터 계산 함수</li>
+          <li><code className="bg-white px-1 rounded">initialPageParam</code>: 초기 페이지 파라미터</li>
         </ul>
       </div>
 
@@ -106,10 +106,10 @@ export function InfiniteQueriesDemo() {
         {allPosts.map((post) => (
           <div
             key={post.id}
-            className="p-4 border rounded-lg bg-white dark:bg-gray-800 hover:shadow-md transition-shadow"
+            className="p-4 border rounded-lg bg-white hover:shadow-md transition-shadow"
           >
             <h4 className="font-semibold mb-1">{post.title}</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+            <p className="text-sm text-gray-600 line-clamp-2">
               {post.body}
             </p>
             <p className="text-xs text-gray-500 mt-2">Post ID: {post.id} | User ID: {post.userId}</p>
@@ -131,7 +131,7 @@ export function InfiniteQueriesDemo() {
         )}
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">실전 활용:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>무한 스크롤: Intersection Observer와 함께 사용</li>

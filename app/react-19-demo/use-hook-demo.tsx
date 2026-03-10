@@ -39,7 +39,7 @@ function UserProfile({
   const user = use(userPromise);
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="font-semibold mb-2">사용자 정보</h3>
       <p>
         <strong>ID:</strong> {user.id}
@@ -65,7 +65,7 @@ function UserProfileFromContext() {
   const user = use(userPromise);
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="font-semibold mb-2">Context에서 가져온 사용자 정보</h3>
       <p>
         <strong>ID:</strong> {user.id}
@@ -83,10 +83,10 @@ function UserProfileFromContext() {
 // 로딩 중 컴포넌트
 function LoadingFallback() {
   return (
-    <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-2"></div>
-      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+    <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+      <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+      <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+      <div className="h-4 bg-gray-200 rounded w-2/3"></div>
     </div>
   );
 }
@@ -97,7 +97,7 @@ export function UseHookDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">use 훅의 주요 특징:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>Promise를 직접 처리할 수 있어 async/await보다 더 선언적</li>
@@ -135,7 +135,7 @@ export function UseHookDemo() {
         </UserContext.Provider>
       </div>
 
-      <div className="p-4 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
+      <div className="p-4 bg-yellow-50 rounded-lg">
         <p className="text-sm">
           <strong>주의:</strong> use 훅은 Promise나 Context를 인자로 받아야
           합니다. 일반 값에 사용하면 에러가 발생합니다.

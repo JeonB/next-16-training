@@ -102,30 +102,30 @@ function UserForm() {
       </form>
 
       {/* Mutation 상태 표시 */}
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900">
+      <div className="p-4 border rounded-lg bg-gray-50">
         <h3 className="font-semibold mb-2">Mutation 상태:</h3>
         <ul className="text-sm space-y-1">
           <li>
-            <code className="bg-white dark:bg-gray-800 px-1 rounded">isPending</code>:{" "}
+            <code className="bg-white px-1 rounded">isPending</code>:{" "}
             {mutation.isPending ? "진행 중" : "대기 중"}
           </li>
           <li>
-            <code className="bg-white dark:bg-gray-800 px-1 rounded">isSuccess</code>:{" "}
+            <code className="bg-white px-1 rounded">isSuccess</code>:{" "}
             {mutation.isSuccess ? "성공" : "아님"}
           </li>
           <li>
-            <code className="bg-white dark:bg-gray-800 px-1 rounded">isError</code>:{" "}
+            <code className="bg-white px-1 rounded">isError</code>:{" "}
             {mutation.isError ? "에러" : "정상"}
           </li>
           {mutation.data && (
             <li>
-              <code className="bg-white dark:bg-gray-800 px-1 rounded">data</code>:{" "}
+              <code className="bg-white px-1 rounded">data</code>:{" "}
               {JSON.stringify(mutation.data, null, 2)}
             </li>
           )}
           {mutation.error && (
             <li>
-              <code className="bg-white dark:bg-gray-800 px-1 rounded">error</code>:{" "}
+              <code className="bg-white px-1 rounded">error</code>:{" "}
               {mutation.error instanceof Error ? mutation.error.message : "Unknown error"}
             </li>
           )}
@@ -133,16 +133,16 @@ function UserForm() {
       </div>
 
       {mutation.isSuccess && (
-        <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
-          <p className="text-green-700 dark:text-green-400">
+        <div className="p-4 bg-green-50 rounded-lg">
+          <p className="text-green-700">
             사용자가 성공적으로 생성되었습니다!
           </p>
         </div>
       )}
 
       {mutation.isError && (
-        <div className="p-4 bg-red-50 dark:bg-red-950 rounded-lg">
-          <p className="text-red-700 dark:text-red-400">
+        <div className="p-4 bg-red-50 rounded-lg">
+          <p className="text-red-700">
             사용자 생성 중 오류가 발생했습니다.
           </p>
         </div>
@@ -154,24 +154,24 @@ function UserForm() {
 export function MutationBasicsDemo() {
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useMutation의 주요 속성:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">mutate</code>: mutation 실행 함수</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">mutateAsync</code>: Promise를 반환하는 mutation 실행</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isPending</code>: mutation 진행 중 여부</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isSuccess</code>: 성공 여부</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isError</code>: 에러 발생 여부</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">data</code>: 성공 시 반환된 데이터</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">error</code>: 에러 객체</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">onSuccess</code>: 성공 콜백</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">onError</code>: 에러 콜백</li>
+          <li><code className="bg-white px-1 rounded">mutate</code>: mutation 실행 함수</li>
+          <li><code className="bg-white px-1 rounded">mutateAsync</code>: Promise를 반환하는 mutation 실행</li>
+          <li><code className="bg-white px-1 rounded">isPending</code>: mutation 진행 중 여부</li>
+          <li><code className="bg-white px-1 rounded">isSuccess</code>: 성공 여부</li>
+          <li><code className="bg-white px-1 rounded">isError</code>: 에러 발생 여부</li>
+          <li><code className="bg-white px-1 rounded">data</code>: 성공 시 반환된 데이터</li>
+          <li><code className="bg-white px-1 rounded">error</code>: 에러 객체</li>
+          <li><code className="bg-white px-1 rounded">onSuccess</code>: 성공 콜백</li>
+          <li><code className="bg-white px-1 rounded">onError</code>: 에러 콜백</li>
         </ul>
       </div>
 
       <UserForm />
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">Mutation vs Query:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>Query</strong>: 데이터를 읽어올 때 사용 (GET 요청)</li>

@@ -72,9 +72,9 @@ function ErrorHandlingExample() {
       </div>
 
       {isError && (
-        <div className="p-4 border border-red-300 bg-red-50 dark:bg-red-950 rounded-lg">
-          <p className="text-red-700 dark:text-red-400 font-semibold mb-2">에러 발생:</p>
-          <p className="text-red-600 dark:text-red-300 text-sm mb-3">
+        <div className="p-4 border border-red-300 bg-red-50 rounded-lg">
+          <p className="text-red-700 font-semibold mb-2">에러 발생:</p>
+          <p className="text-red-600 text-sm mb-3">
             {error instanceof Error ? error.message : "알 수 없는 에러"}
           </p>
           <button
@@ -87,8 +87,8 @@ function ErrorHandlingExample() {
       )}
 
       {data && (
-        <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-950">
-          <p className="text-green-700 dark:text-green-400">
+        <div className="p-4 border rounded-lg bg-green-50">
+          <p className="text-green-700">
             성공: {data.name} - {data.price.toLocaleString()}원
           </p>
         </div>
@@ -128,19 +128,19 @@ function RetryExample() {
       </div>
 
       {isError && (
-        <div className="p-4 border border-orange-300 bg-orange-50 dark:bg-orange-950 rounded-lg">
-          <p className="text-orange-700 dark:text-orange-400">
+        <div className="p-4 border border-orange-300 bg-orange-50 rounded-lg">
+          <p className="text-orange-700">
             {error instanceof Error ? error.message : "알 수 없는 에러"}
           </p>
-          <p className="text-sm text-orange-600 dark:text-orange-300 mt-1">
+          <p className="text-sm text-orange-600 mt-1">
             재시도 횟수 초과 (최대 3번 재시도)
           </p>
         </div>
       )}
 
       {data && (
-        <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-950">
-          <p className="text-green-700 dark:text-green-400">
+        <div className="p-4 border rounded-lg bg-green-50">
+          <p className="text-green-700">
             성공: {data.name} - {data.price.toLocaleString()}원
           </p>
         </div>
@@ -193,9 +193,9 @@ function MutationErrorExample() {
       </form>
 
       {mutation.isError && (
-        <div className="p-4 border border-red-300 bg-red-50 dark:bg-red-950 rounded-lg">
-          <p className="text-red-700 dark:text-red-400 font-semibold">에러 발생:</p>
-          <p className="text-red-600 dark:text-red-300 text-sm mt-1">
+        <div className="p-4 border border-red-300 bg-red-50 rounded-lg">
+          <p className="text-red-700 font-semibold">에러 발생:</p>
+          <p className="text-red-600 text-sm mt-1">
             {mutation.error instanceof Error
               ? mutation.error.message
               : "알 수 없는 에러"}
@@ -204,8 +204,8 @@ function MutationErrorExample() {
       )}
 
       {mutation.isSuccess && (
-        <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-950">
-          <p className="text-green-700 dark:text-green-400">
+        <div className="p-4 border rounded-lg bg-green-50">
+          <p className="text-green-700">
             가격이 성공적으로 업데이트되었습니다!
           </p>
         </div>
@@ -217,13 +217,13 @@ function MutationErrorExample() {
 export function ErrorHandlingDemo() {
   return (
     <div className="space-y-8">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Error Handling 방법:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isError</code>, <code className="bg-white dark:bg-gray-800 px-1 rounded">error</code>로 에러 상태 확인</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">retry</code>: 자동 재시도 설정</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">retryDelay</code>: 재시도 지연 시간 설정</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">onError</code>: Mutation 에러 콜백</li>
+          <li><code className="bg-white px-1 rounded">isError</code>, <code className="bg-white px-1 rounded">error</code>로 에러 상태 확인</li>
+          <li><code className="bg-white px-1 rounded">retry</code>: 자동 재시도 설정</li>
+          <li><code className="bg-white px-1 rounded">retryDelay</code>: 재시도 지연 시간 설정</li>
+          <li><code className="bg-white px-1 rounded">onError</code>: Mutation 에러 콜백</li>
           <li>Error Boundary와 함께 사용하면 전역 에러 처리 가능</li>
         </ul>
       </div>
@@ -245,7 +245,7 @@ export function ErrorHandlingDemo() {
         </section>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">에러 처리 전략:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>일시적인 네트워크 오류: 자동 재시도 (retry)</li>

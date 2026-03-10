@@ -51,9 +51,9 @@ export function HydrationPatternDemo() {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
       </div>
     );
   }
@@ -62,7 +62,7 @@ export function HydrationPatternDemo() {
 
   return (
     <div className="space-y-4">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Hydration 패턴의 두 가지 방법:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>prefetchQuery + HydrationBoundary:</strong> Server Component에서 prefetch 후 자동 hydration</li>
@@ -71,18 +71,18 @@ export function HydrationPatternDemo() {
         </ul>
       </div>
 
-      <div className="p-6 border rounded-lg bg-white dark:bg-gray-800">
+      <div className="p-6 border rounded-lg bg-white">
         {isFetching && !isLoading && (
           <div className="mb-4 text-sm text-blue-500">백그라운드 업데이트 중...</div>
         )}
         <h3 className="text-xl font-semibold mb-2">{user.name}</h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-1">{user.email}</p>
+        <p className="text-gray-600 mb-1">{user.email}</p>
         <p className="text-sm">
           <span className="font-medium">역할:</span>{" "}
           <span className={`px-2 py-1 rounded text-xs ${
             user.role === "admin"
-              ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300"
-              : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+              ? "bg-purple-100 text-purple-700"
+              : "bg-gray-100 text-gray-700"
           }`}>
             {user.role}
           </span>
@@ -101,7 +101,7 @@ export function HydrationPatternDemo() {
         </p>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">언제 어떤 방법을 사용하나요?</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>prefetchQuery:</strong> Server Component에서 데이터 가져올 때 (권장)</li>

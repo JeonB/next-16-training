@@ -50,8 +50,8 @@ const Feedback = ({ state }: FeedbackProps) => {
     <p
       className={
         state.ok
-          ? `${baseStyle} bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 border-green-200 dark:border-green-800`
-          : `${baseStyle} bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 border-red-200 dark:border-red-800`
+          ? `${baseStyle} bg-green-50 text-green-800 border-green-200
+          : `${baseStyle} bg-red-50 text-red-800 border-red-200
       }
     >
       {state.message}
@@ -79,35 +79,35 @@ export const CreateUserForm = ({ action }: CreateUserFormProps) => {
   return (
     <form ref={formRef} action={formAction} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-black dark:text-zinc-50 mb-1">
+        <label className="block text-sm font-medium text-black mb-1">
           이름
         </label>
         <input
           name="name"
           type="text"
           required
-          className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-zinc-50"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-lg bg-white text-black"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-black dark:text-zinc-50 mb-1">
+        <label className="block text-sm font-medium text-black mb-1">
           이메일
         </label>
         <input
           name="email"
           type="email"
           required
-          className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-zinc-50"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-lg bg-white text-black"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-black dark:text-zinc-50 mb-1">
+        <label className="block text-sm font-medium text-black mb-1">
           역할
         </label>
         <select
           name="role"
           defaultValue="user"
-          className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-zinc-50"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-lg bg-white text-black"
         >
           <option value="user">사용자</option>
           <option value="admin">관리자</option>
@@ -116,7 +116,7 @@ export const CreateUserForm = ({ action }: CreateUserFormProps) => {
       </div>
       <SubmitButton
         pendingText="생성 중..."
-        className="w-full px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-50 font-medium"
+        className="w-full px-4 py-2 bg-black text-white rounded-lg hover:bg-zinc-800 disabled:opacity-50 font-medium"
       >
         생성
       </SubmitButton>
@@ -140,7 +140,7 @@ export const EditUserForm = ({ action, user }: EditUserFormProps) => {
 
   if (!user) {
     return (
-      <p className="text-zinc-600 dark:text-zinc-400">
+      <p className="text-zinc-600">
         수정할 사용자를 선택하세요.
       </p>
     );
@@ -150,35 +150,35 @@ export const EditUserForm = ({ action, user }: EditUserFormProps) => {
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="id" value={user.id} />
       <div>
-        <label className="block text-sm font-medium text-black dark:text-zinc-50 mb-1">
+        <label className="block text-sm font-medium text-black mb-1">
           이름
         </label>
         <input
           name="name"
           type="text"
           defaultValue={user.name}
-          className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-zinc-50"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-lg bg-white text-black"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-black dark:text-zinc-50 mb-1">
+        <label className="block text-sm font-medium text-black mb-1">
           이메일
         </label>
         <input
           name="email"
           type="email"
           defaultValue={user.email}
-          className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-zinc-50"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-lg bg-white text-black"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-black dark:text-zinc-50 mb-1">
+        <label className="block text-sm font-medium text-black mb-1">
           역할
         </label>
         <select
           name="role"
           defaultValue={defaultRole}
-          className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-zinc-50"
+          className="w-full px-4 py-2 border border-zinc-300 rounded-lg bg-white text-black"
         >
           <option value="user">사용자</option>
           <option value="admin">관리자</option>
@@ -187,7 +187,7 @@ export const EditUserForm = ({ action, user }: EditUserFormProps) => {
       </div>
       <SubmitButton
         pendingText="수정 중..."
-        className="w-full px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-50 font-medium"
+        className="w-full px-4 py-2 bg-black text-white rounded-lg hover:bg-zinc-800 disabled:opacity-50 font-medium"
       >
         수정
       </SubmitButton>
@@ -217,7 +217,7 @@ export const DeleteUserForm = ({ action, userId }: DeleteUserFormProps) => {
         삭제
       </SubmitButton>
       {!state.ok && state.message ? (
-        <span className="text-xs text-red-600 dark:text-red-400">
+        <span className="text-xs text-red-600">
           {state.message}
         </span>
       ) : null}

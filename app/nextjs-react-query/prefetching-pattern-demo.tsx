@@ -39,9 +39,9 @@ export function PrefetchingPatternDemo() {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
       </div>
     );
   }
@@ -50,29 +50,29 @@ export function PrefetchingPatternDemo() {
 
   return (
     <div className="space-y-4">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Prefetching 패턴 흐름:</h3>
         <ol className="list-decimal list-inside space-y-1 text-sm">
-          <li>Server Component에서 <code className="bg-white dark:bg-gray-800 px-1 rounded">queryClient.prefetchQuery()</code> 실행</li>
+          <li>Server Component에서 <code className="bg-white px-1 rounded">queryClient.prefetchQuery()</code> 실행</li>
           <li>데이터가 QueryClient 캐시에 저장됨</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">dehydrate(queryClient)</code>로 상태를 직렬화</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">HydrationBoundary</code>로 클라이언트에 전달</li>
-          <li>Client Component의 <code className="bg-white dark:bg-gray-800 px-1 rounded">useQuery</code>가 즉시 캐시된 데이터 사용</li>
+          <li><code className="bg-white px-1 rounded">dehydrate(queryClient)</code>로 상태를 직렬화</li>
+          <li><code className="bg-white px-1 rounded">HydrationBoundary</code>로 클라이언트에 전달</li>
+          <li>Client Component의 <code className="bg-white px-1 rounded">useQuery</code>가 즉시 캐시된 데이터 사용</li>
         </ol>
       </div>
 
-      <div className="p-6 border rounded-lg bg-white dark:bg-gray-800">
+      <div className="p-6 border rounded-lg bg-white">
         {isFetching && !isLoading && (
           <div className="mb-4 text-sm text-blue-500">백그라운드 업데이트 중...</div>
         )}
         <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
-        <p className="text-3xl font-semibold text-blue-600 dark:text-blue-400 mb-4">
+        <p className="text-3xl font-semibold text-blue-600 mb-4">
           {product.price.toLocaleString()}원
         </p>
-        <p className="text-gray-700 dark:text-gray-300">{product.description}</p>
+        <p className="text-gray-700">{product.description}</p>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">장점:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>초기 로딩 시간 단축 (서버에서 이미 데이터 가져옴)</li>

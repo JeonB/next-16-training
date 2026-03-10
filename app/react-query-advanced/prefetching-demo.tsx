@@ -42,7 +42,7 @@ function ProductCard({ productId, onSelect }: { productId: number; onSelect: () 
 
   return (
     <div
-      className="p-4 border rounded-lg bg-white dark:bg-gray-800 cursor-pointer hover:shadow-lg transition-shadow"
+      className="p-4 border rounded-lg bg-white cursor-pointer hover:shadow-lg transition-shadow"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onSelect}
@@ -72,7 +72,7 @@ function ProductDetail({ productId }: { productId: number | null }) {
 
   if (!productId) {
     return (
-      <div className="p-8 border rounded-lg bg-gray-50 dark:bg-gray-900 text-center text-muted-foreground">
+      <div className="p-8 border rounded-lg bg-gray-50 text-center text-muted-foreground">
         제품을 선택하세요
       </div>
     );
@@ -80,18 +80,18 @@ function ProductDetail({ productId }: { productId: number | null }) {
 
   if (isLoading) {
     return (
-      <div className="p-8 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+      <div className="p-8 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="p-8 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">
+      <div className="p-8 border rounded-lg bg-red-50">
+        <p className="text-red-700">
           에러 발생: {error instanceof Error ? error.message : "Unknown error"}
         </p>
       </div>
@@ -101,15 +101,15 @@ function ProductDetail({ productId }: { productId: number | null }) {
   if (!product) return null;
 
   return (
-    <div className="p-6 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-6 border rounded-lg bg-white">
       {isFetching && !isLoading && (
         <div className="mb-4 text-sm text-blue-500">업데이트 중...</div>
       )}
       <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
-      <p className="text-3xl font-semibold text-blue-600 dark:text-blue-400 mb-4">
+      <p className="text-3xl font-semibold text-blue-600 mb-4">
         {product.price.toLocaleString()}원
       </p>
-      <p className="text-gray-700 dark:text-gray-300">{product.description}</p>
+      <p className="text-gray-700">{product.description}</p>
     </div>
   );
 }
@@ -140,7 +140,7 @@ export function PrefetchingDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Prefetching 전략:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>호버 시 prefetch:</strong> 사용자가 호버한 항목 미리 로드</li>
@@ -195,7 +195,7 @@ export function PrefetchingDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">실전 활용:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>이커머스: 제품 목록에서 호버 시 상세 정보 미리 로드</li>

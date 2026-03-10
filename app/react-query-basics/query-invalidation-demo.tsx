@@ -83,11 +83,11 @@ function TodoList() {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
         <div className="space-y-2">
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
         </div>
       </div>
     );
@@ -122,7 +122,7 @@ function TodoList() {
         {todos?.map((todo) => (
           <div
             key={todo.id}
-            className="flex items-center space-x-3 p-3 border rounded-lg bg-white dark:bg-gray-800"
+            className="flex items-center space-x-3 p-3 border rounded-lg bg-white"
           >
             <input
               type="checkbox"
@@ -135,7 +135,7 @@ function TodoList() {
               className={`flex-1 ${
                 todo.completed
                   ? "line-through text-gray-400"
-                  : "text-gray-900 dark:text-gray-100"
+                  : "text-gray-900"
               }`}
             >
               {todo.text}
@@ -152,7 +152,7 @@ export function QueryInvalidationDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Query Invalidation 패턴:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>Mutation 성공 후 관련 Query 무효화</li>
@@ -192,12 +192,12 @@ export function QueryInvalidationDemo() {
             Todos 캐시 리셋
           </button>
         </div>
-        <div className="p-4 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
+        <div className="p-4 bg-yellow-50 rounded-lg">
           <p className="text-sm font-semibold mb-1">차이점:</p>
           <ul className="list-disc list-inside space-y-1 text-sm">
-            <li><code className="bg-white dark:bg-gray-800 px-1 rounded">invalidateQueries</code>: 무효화하고 활성 쿼리만 리페치</li>
-            <li><code className="bg-white dark:bg-gray-800 px-1 rounded">refetchQueries</code>: 즉시 리페치 (무효화 없이)</li>
-            <li><code className="bg-white dark:bg-gray-800 px-1 rounded">resetQueries</code>: 캐시를 완전히 리셋</li>
+            <li><code className="bg-white px-1 rounded">invalidateQueries</code>: 무효화하고 활성 쿼리만 리페치</li>
+            <li><code className="bg-white px-1 rounded">refetchQueries</code>: 즉시 리페치 (무효화 없이)</li>
+            <li><code className="bg-white px-1 rounded">resetQueries</code>: 캐시를 완전히 리셋</li>
           </ul>
         </div>
       </div>

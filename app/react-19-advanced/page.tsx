@@ -17,7 +17,7 @@ export default function React19AdvancedPage() {
         <p className="text-lg text-muted-foreground mb-2">
           React 19의 고급 기능과 실전 패턴을 학습합니다.
         </p>
-        <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+        <div className="mt-4 p-4 bg-blue-50 rounded-lg">
           <h2 className="font-semibold mb-2">학습 내용:</h2>
           <ul className="list-disc list-inside space-y-1 text-sm">
             <li>useTransition과 startTransition</li>

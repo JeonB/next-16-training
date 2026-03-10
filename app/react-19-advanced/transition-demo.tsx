@@ -48,8 +48,8 @@ function ListWithoutTransition() {
         </label>
         {isUpdating && <span className="ml-2 text-sm text-blue-500">업데이트 중...</span>}
       </div>
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-sm text-red-700 dark:text-red-400 mb-2">
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-sm text-red-700 mb-2">
           ⚠️ 입력이 끊기는 현상 발생 (블로킹)
         </p>
         <div className="max-h-40 overflow-y-auto">
@@ -103,8 +103,8 @@ function ListWithTransition() {
         </label>
         {isPending && <span className="ml-2 text-sm text-blue-500">업데이트 중...</span>}
       </div>
-      <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-950">
-        <p className="text-sm text-green-700 dark:text-green-400 mb-2">
+      <div className="p-4 border rounded-lg bg-green-50">
+        <p className="text-sm text-green-700 mb-2">
           ✅ 입력이 부드럽게 반응 (비블로킹)
         </p>
         <div className="max-h-40 overflow-y-auto">
@@ -149,8 +149,8 @@ function ListWithDeferredValue() {
         </label>
         {isPending && <span className="ml-2 text-sm text-blue-500">업데이트 중...</span>}
       </div>
-      <div className="p-4 border rounded-lg bg-blue-50 dark:bg-blue-950">
-        <p className="text-sm text-blue-700 dark:text-blue-400 mb-2">
+      <div className="p-4 border rounded-lg bg-blue-50">
+        <p className="text-sm text-blue-700 mb-2">
           ✅ useDeferredValue로 값 업데이트 지연
         </p>
         <div className="max-h-40 overflow-y-auto">
@@ -176,12 +176,12 @@ function ListWithDeferredValue() {
 export function TransitionDemo() {
   return (
     <div className="space-y-8">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useTransition과 startTransition:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">useTransition</code>: 비동기 상태 업데이트 관리</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">startTransition</code>: 긴급하지 않은 업데이트를 transition으로 표시</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">useDeferredValue</code>: 값 업데이트를 지연시켜 UI 반응성 유지</li>
+          <li><code className="bg-white px-1 rounded">useTransition</code>: 비동기 상태 업데이트 관리</li>
+          <li><code className="bg-white px-1 rounded">startTransition</code>: 긴급하지 않은 업데이트를 transition으로 표시</li>
+          <li><code className="bg-white px-1 rounded">useDeferredValue</code>: 값 업데이트를 지연시켜 UI 반응성 유지</li>
           <li>입력 필드가 끊기는 현상 방지</li>
           <li>긴급 업데이트와 비긴급 업데이트 구분</li>
         </ul>
@@ -204,7 +204,7 @@ export function TransitionDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">언제 사용하나요?</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>useTransition:</strong> 여러 상태를 업데이트하는 경우</li>

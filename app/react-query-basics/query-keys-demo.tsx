@@ -41,23 +41,23 @@ function UserDetail({ userId }: { userId: string }) {
 
   if (query.isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
       </div>
     );
   }
 
   if (query.isError || !query.data) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">에러 발생</p>
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">에러 발생</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="font-semibold">{query.data.name}</h3>
       <p className="text-sm text-muted-foreground">{query.data.email}</p>
       <p className="text-xs text-muted-foreground mt-2">
@@ -89,7 +89,7 @@ export function QueryKeysDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">구조화된 Query Keys의 장점:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>계층적 구조로 쿼리를 그룹화 가능</li>
@@ -115,7 +115,7 @@ export function QueryKeysDemo() {
 
       <div className="space-y-3">
         <h3 className="font-semibold">Query Keys 구조:</h3>
-        <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg font-mono text-sm">
+        <div className="p-4 bg-gray-50 rounded-lg font-mono text-sm">
           <div className="mb-2">
             <span className="text-blue-500">userKeys.all</span>
             <span className="text-gray-500"> → ["users"]</span>

@@ -80,29 +80,29 @@ function ProductDetail({ productId }: { productId: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
       </div>
     );
   }
 
   if (error || !product) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">제품을 불러올 수 없습니다.</p>
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">제품을 불러올 수 없습니다.</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-      <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+      <p className="text-2xl font-bold text-blue-600 mb-2">
         {product.price.toLocaleString()}원
       </p>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">카테고리: {product.category}</p>
-      <p className="text-sm text-gray-700 dark:text-gray-200">{product.description}</p>
+      <p className="text-sm text-gray-600 mb-1">카테고리: {product.category}</p>
+      <p className="text-sm text-gray-700">{product.description}</p>
     </div>
   );
 }
@@ -112,10 +112,10 @@ function ProductsList({ params }: { params?: ProductListParams }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
         <div className="space-y-2">
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
         </div>
       </div>
     );
@@ -123,20 +123,20 @@ function ProductsList({ params }: { params?: ProductListParams }) {
 
   if (error || !products) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">제품 목록을 불러올 수 없습니다.</p>
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">제품 목록을 불러올 수 없습니다.</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="font-semibold mb-3">제품 목록 ({products.length}개):</h3>
       <div className="space-y-2">
         {products.map((product) => (
-          <div key={product.id} className="p-2 border rounded bg-gray-50 dark:bg-gray-900">
+          <div key={product.id} className="p-2 border rounded bg-gray-50">
             <p className="font-medium">{product.name}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
+            <p className="text-sm text-gray-600">
               {product.price.toLocaleString()}원 - {product.category}
             </p>
           </div>
@@ -152,7 +152,7 @@ export function QueryOptionsFactoryDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Query Options Factory 패턴의 장점:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>타입 안전성: queryOptions가 타입을 자동 추론</li>
@@ -202,7 +202,7 @@ export function QueryOptionsFactoryDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">Server Component에서 사용 예시:</h3>
         <pre className="bg-gray-800 text-green-400 p-3 rounded text-xs overflow-x-auto">
 {`// Server Component

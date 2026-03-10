@@ -89,29 +89,29 @@ function UserProfile({ userId }: { userId: number | null }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
       </div>
     );
   }
 
   if (error || !user) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">사용자를 불러올 수 없습니다.</p>
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">사용자를 불러올 수 없습니다.</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="text-lg font-semibold mb-2">{user.name}</h3>
-      <p className="text-gray-600 dark:text-gray-300 mb-1">{user.email}</p>
+      <p className="text-gray-600 mb-1">{user.email}</p>
       <span className={`px-2 py-1 rounded text-xs ${
         user.role === "admin"
-          ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300"
-          : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+          ? "bg-purple-100 text-purple-700"
+          : "bg-gray-100 text-gray-700"
       }`}>
         {user.role}
       </span>
@@ -138,7 +138,7 @@ function CreateUserForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-lg bg-white">
       <div>
         <label className="block text-sm font-medium mb-1">이름:</label>
         <input
@@ -169,10 +169,10 @@ function CreateUserForm() {
         {createUser.isPending ? "생성 중..." : "사용자 생성"}
       </button>
       {createUser.isSuccess && (
-        <p className="text-sm text-green-600 dark:text-green-400">사용자가 생성되었습니다!</p>
+        <p className="text-sm text-green-600">사용자가 생성되었습니다!</p>
       )}
       {createUser.isError && (
-        <p className="text-sm text-red-600 dark:text-red-400">생성 중 오류가 발생했습니다.</p>
+        <p className="text-sm text-red-600">생성 중 오류가 발생했습니다.</p>
       )}
     </form>
   );
@@ -183,10 +183,10 @@ function UsersList() {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
         <div className="space-y-2">
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
         </div>
       </div>
     );
@@ -194,14 +194,14 @@ function UsersList() {
 
   if (!users || users.length === 0) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900">
+      <div className="p-4 border rounded-lg bg-gray-50">
         <p className="text-muted-foreground">사용자가 없습니다.</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="font-semibold mb-3">사용자 목록:</h3>
       <ul className="space-y-2">
         {users.map((user) => (
@@ -219,7 +219,7 @@ export function CustomHooksDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Custom Hooks의 장점:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>코드 재사용성 향상</li>
@@ -261,7 +261,7 @@ export function CustomHooksDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">Best Practices:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>도메인별로 Custom Hooks 분리 (예: useUser, useProduct)</li>

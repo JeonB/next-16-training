@@ -8,21 +8,21 @@ export default async function BFFAggregationDemoPage() {
   const stats = await getUserStats();
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-zinc-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <Link
               href="/bff-demo"
-              className="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-50"
+              className="text-zinc-600 hover:text-black"
             >
               ← BFF 기본 데모로 돌아가기
             </Link>
           </div>
-          <h1 className="text-4xl font-bold text-black dark:text-zinc-50 mb-2">
+          <h1 className="text-4xl font-bold text-black mb-2">
             BFF 데이터 집계 패턴 데모
           </h1>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="text-lg text-zinc-600">
             여러 데이터 소스를 집계하여 프론트엔드에 최적화된 형태로 제공하는
             BFF 패턴 예시
           </p>
@@ -62,8 +62,8 @@ export default async function BFFAggregationDemoPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* 역할별 분포 */}
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-6 border border-zinc-200 dark:border-zinc-800">
-            <h2 className="text-2xl font-semibold text-black dark:text-zinc-50 mb-4">
+          <div className="bg-white rounded-lg shadow p-6 border border-zinc-200">
+            <h2 className="text-2xl font-semibold text-black mb-4">
               역할별 사용자 분포
             </h2>
             <div className="space-y-4">
@@ -74,13 +74,13 @@ export default async function BFFAggregationDemoPage() {
           </div>
 
           {/* 최근 생성된 사용자 */}
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-6 border border-zinc-200 dark:border-zinc-800">
-            <h2 className="text-2xl font-semibold text-black dark:text-zinc-50 mb-4">
+          <div className="bg-white rounded-lg shadow p-6 border border-zinc-200">
+            <h2 className="text-2xl font-semibold text-black mb-4">
               최근 생성된 사용자
             </h2>
             <div className="space-y-3">
               {stats.recentUsers.length === 0 ? (
-                <p className="text-zinc-600 dark:text-zinc-400">
+                <p className="text-zinc-600">
                   최근 7일 내 생성된 사용자가 없습니다.
                 </p>
               ) : (
@@ -93,13 +93,13 @@ export default async function BFFAggregationDemoPage() {
         </div>
 
         {/* BFF 패턴 설명 */}
-        <div className="mt-8 bg-white dark:bg-zinc-900 rounded-lg shadow p-6 border border-zinc-200 dark:border-zinc-800">
-          <h2 className="text-2xl font-semibold text-black dark:text-zinc-50 mb-4">
+        <div className="mt-8 bg-white rounded-lg shadow p-6 border border-zinc-200">
+          <h2 className="text-2xl font-semibold text-black mb-4">
             BFF 데이터 집계 패턴 설명
           </h2>
-          <div className="space-y-4 text-zinc-700 dark:text-zinc-300">
+          <div className="space-y-4 text-zinc-700">
             <div>
-              <h3 className="font-semibold text-black dark:text-zinc-50 mb-2">
+              <h3 className="font-semibold text-black mb-2">
                 1. 데이터 집계 (Aggregation)
               </h3>
               <p>
@@ -110,7 +110,7 @@ export default async function BFFAggregationDemoPage() {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-black dark:text-zinc-50 mb-2">
+              <h3 className="font-semibold text-black mb-2">
                 2. 데이터 변환 (Transformation)
               </h3>
               <p>
@@ -120,7 +120,7 @@ export default async function BFFAggregationDemoPage() {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-black dark:text-zinc-50 mb-2">
+              <h3 className="font-semibold text-black mb-2">
                 3. 성능 최적화
               </h3>
               <p>
@@ -130,7 +130,7 @@ export default async function BFFAggregationDemoPage() {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-black dark:text-zinc-50 mb-2">
+              <h3 className="font-semibold text-black mb-2">
                 4. 타입 안전성
               </h3>
               <p>
@@ -159,16 +159,16 @@ function RoleBar({ distribution }: RoleBarProps) {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-medium text-black dark:text-zinc-50">
+        <span className="text-sm font-medium text-black">
           {roleLabels[distribution.role] || distribution.role}
         </span>
-        <span className="text-sm text-zinc-600 dark:text-zinc-400">
+        <span className="text-sm text-zinc-600">
           {distribution.count}명 ({distribution.percentage}%)
         </span>
       </div>
-      <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2">
+      <div className="w-full bg-zinc-200 rounded-full h-2">
         <div
-          className="bg-black dark:bg-white h-2 rounded-full transition-all duration-300"
+          className="bg-black h-2 rounded-full transition-all duration-300"
           style={{ width: `${distribution.percentage}%` }}
         />
       </div>
@@ -182,15 +182,15 @@ interface RecentUserItemProps {
 
 function RecentUserItem({ user }: RecentUserItemProps) {
   return (
-    <div className="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-800 rounded-lg">
+    <div className="flex items-center justify-between p-3 bg-zinc-50 rounded-lg">
       <div className="flex-1">
-        <p className="font-medium text-black dark:text-zinc-50">{user.name}</p>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="font-medium text-black">{user.name}</p>
+        <p className="text-sm text-zinc-600">
           {user.email}
         </p>
       </div>
       <div className="text-right">
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-sm text-zinc-600">
           {user.daysSinceCreation === 0
             ? "오늘"
             : `${user.daysSinceCreation}일 전`}

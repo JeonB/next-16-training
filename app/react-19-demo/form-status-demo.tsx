@@ -71,13 +71,13 @@ function CommentForm() {
       <SubmitButton />
 
       {state.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-400 rounded">
+        <div className="p-3 bg-red-50 text-red-700 rounded">
           {state.error}
         </div>
       )}
 
       {state.message && (
-        <div className="p-3 bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-400 rounded">
+        <div className="p-3 bg-green-50 text-green-700 rounded">
           {state.message}
         </div>
       )}
@@ -92,7 +92,7 @@ function FormStatusIndicator() {
   if (!pending) return null;
 
   return (
-    <div className="flex items-center space-x-2 text-sm text-blue-600 dark:text-blue-400">
+    <div className="flex items-center space-x-2 text-sm text-blue-600">
       <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
       <span>처리 중...</span>
     </div>
@@ -129,15 +129,15 @@ function SearchForm() {
 export function FormStatusDemo() {
   return (
     <div className="space-y-8">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useFormStatus & useFormState의 특징:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>
-            <code className="bg-white dark:bg-gray-800 px-1 rounded">useFormStatus</code>:
+            <code className="bg-white px-1 rounded">useFormStatus</code>:
             가장 가까운 form의 제출 상태를 읽음 (pending, data, method, action)
           </li>
           <li>
-            <code className="bg-white dark:bg-gray-800 px-1 rounded">useFormState</code>:
+            <code className="bg-white px-1 rounded">useFormState</code>:
             폼의 상태와 액션을 함께 관리 (이전 상태를 인자로 받음)
           </li>
           <li>Server Actions와 함께 사용하면 더 강력함</li>
@@ -148,23 +148,23 @@ export function FormStatusDemo() {
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold mb-3">1. useFormState + useFormStatus 사용:</h3>
-          <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+          <div className="p-4 border rounded-lg bg-white">
             <CommentForm />
           </div>
         </div>
 
         <div>
           <h3 className="font-semibold mb-3">2. useFormStatus만 사용 (로딩 인디케이터):</h3>
-          <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+          <div className="p-4 border rounded-lg bg-white">
             <SearchForm />
           </div>
         </div>
       </div>
 
-      <div className="p-4 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
+      <div className="p-4 bg-yellow-50 rounded-lg">
         <p className="text-sm">
-          <strong>주의:</strong> <code className="bg-white dark:bg-gray-800 px-1 rounded">useFormStatus</code>는
-          반드시 <code className="bg-white dark:bg-gray-800 px-1 rounded">form</code> 요소의 자식 컴포넌트에서만 사용해야 합니다.
+          <strong>주의:</strong> <code className="bg-white px-1 rounded">useFormStatus</code>는
+          반드시 <code className="bg-white px-1 rounded">form</code> 요소의 자식 컴포넌트에서만 사용해야 합니다.
           form 외부에서는 작동하지 않습니다.
         </p>
       </div>

@@ -17,7 +17,7 @@ export default function ReactQueryAdvancedPage() {
         <p className="text-lg text-muted-foreground mb-2">
           TanStack Query v5의 고급 기능과 실전 패턴을 학습합니다.
         </p>
-        <div className="mt-4 p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
+        <div className="mt-4 p-4 bg-purple-50 rounded-lg">
           <h2 className="font-semibold mb-2">학습 내용:</h2>
           <ul className="list-disc list-inside space-y-1 text-sm">
             <li>Infinite Queries (무한 스크롤)</li>
@@ -33,7 +33,7 @@ export default function ReactQueryAdvancedPage() {
         <section className="border-b pb-12">
           <h2 className="text-3xl font-bold mb-4">1. Infinite Queries (무한 스크롤)</h2>
           <p className="text-muted-foreground mb-6">
-            <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">useInfiniteQuery</code>를 사용하여
+            <code className="bg-gray-100 px-1 rounded">useInfiniteQuery</code>를 사용하여
             페이지네이션이 있는 데이터를 효율적으로 로드합니다.
           </p>
           <InfiniteQueriesDemo />
@@ -42,7 +42,7 @@ export default function ReactQueryAdvancedPage() {
         <section className="border-b pb-12">
           <h2 className="text-3xl font-bold mb-4">2. Parallel Queries (병렬 쿼리)</h2>
           <p className="text-muted-foreground mb-6">
-            <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">useQueries</code>를 사용하여
+            <code className="bg-gray-100 px-1 rounded">useQueries</code>를 사용하여
             여러 쿼리를 동시에 실행하고 관리합니다.
           </p>
           <ParallelQueriesDemo />

@@ -15,7 +15,7 @@ export default function NextJsReactQueryPage() {
         <p className="text-lg text-muted-foreground mb-2">
           Next.js App Router에서 React Query를 활용한 실전 패턴을 학습합니다.
         </p>
-        <div className="mt-4 p-4 bg-indigo-50 dark:bg-indigo-950 rounded-lg">
+        <div className="mt-4 p-4 bg-indigo-50 rounded-lg">
           <h2 className="font-semibold mb-2">학습 내용:</h2>
           <ul className="list-disc list-inside space-y-1 text-sm">
             <li>Server Components에서 Prefetching</li>

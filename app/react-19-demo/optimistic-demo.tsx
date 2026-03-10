@@ -104,7 +104,7 @@ export function OptimisticDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useOptimistic의 장점:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>서버 응답을 기다리지 않고 즉시 UI 업데이트</li>
@@ -121,7 +121,7 @@ export function OptimisticDemo() {
             {optimisticTodos.map((todo) => (
               <div
                 key={todo.id}
-                className="flex items-center space-x-3 p-3 border rounded-lg bg-white dark:bg-gray-800"
+                className="flex items-center space-x-3 p-3 border rounded-lg bg-white"
               >
                 <input
                   type="checkbox"
@@ -134,7 +134,7 @@ export function OptimisticDemo() {
                   className={`flex-1 ${
                     todo.completed
                       ? "line-through text-gray-400"
-                      : "text-gray-900 dark:text-gray-100"
+                      : "text-gray-900"
                   }`}
                 >
                   {todo.text}
@@ -152,7 +152,7 @@ export function OptimisticDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">동작 방식:</h3>
         <ol className="list-decimal list-inside space-y-1 text-sm">
           <li>사용자가 액션을 수행 (체크박스 클릭, Todo 추가 등)</li>

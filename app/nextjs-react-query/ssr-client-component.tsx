@@ -34,10 +34,10 @@ export function SSRClientComponent() {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
         <div className="space-y-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div key={i} className="h-20 bg-gray-200 rounded"></div>
           ))}
         </div>
       </div>
@@ -46,7 +46,7 @@ export function SSRClientComponent() {
 
   if (!posts || posts.length === 0) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900">
+      <div className="p-4 border rounded-lg bg-gray-50">
         <p className="text-muted-foreground">포스트가 없습니다.</p>
       </div>
     );
@@ -62,16 +62,16 @@ export function SSRClientComponent() {
         {posts.map((post) => (
           <div
             key={post.id}
-            className="p-4 border rounded-lg bg-white dark:bg-gray-800 hover:shadow-md transition-shadow"
+            className="p-4 border rounded-lg bg-white hover:shadow-md transition-shadow"
           >
             <h3 className="text-lg font-semibold mb-2">{post.title}</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">{post.body}</p>
+            <p className="text-gray-600 text-sm mb-2">{post.body}</p>
             <p className="text-xs text-muted-foreground">User ID: {post.userId}</p>
           </div>
         ))}
       </div>
 
-      <div className="p-4 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
+      <div className="p-4 bg-yellow-50 rounded-lg">
         <p className="text-sm">
           💡 이 데이터는 Server Component에서 이미 가져와 캐시에 설정되었기 때문에
           즉시 표시됩니다. 필요 시 백그라운드에서 리페치됩니다.

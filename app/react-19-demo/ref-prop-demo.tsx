@@ -68,11 +68,11 @@ export function RefPropDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">React 19의 ref 변경사항:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">forwardRef</code> deprecated</li>
-          <li>ref를 일반 prop으로 전달 (타입: <code className="bg-white dark:bg-gray-800 px-1 rounded">React.Ref&lt;T&gt;</code>)</li>
+          <li><code className="bg-white px-1 rounded">forwardRef</code> deprecated</li>
+          <li>ref를 일반 prop으로 전달 (타입: <code className="bg-white px-1 rounded">React.Ref&lt;T&gt;</code>)</li>
           <li>더 간단하고 직관적인 API</li>
           <li>TypeScript 타입 추론이 더 명확해짐</li>
         </ul>
@@ -91,7 +91,7 @@ export function RefPropDemo() {
           <div className="mt-2 space-x-2">
             <button
               onClick={handleFocusInput}
-              className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded text-sm"
+              className="px-3 py-1 bg-gray-200 rounded text-sm"
             >
               Input에 포커스
             </button>
@@ -112,7 +112,7 @@ export function RefPropDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">코드 비교:</h3>
         <div className="space-y-2 text-sm">
           <div>

@@ -61,12 +61,12 @@ function FormWithActionState() {
         {isPending ? "제출 중..." : "제출"}
       </button>
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-400 rounded">
+        <div className="p-3 bg-red-50 text-red-700 rounded">
           {state.error}
         </div>
       )}
       {state?.success && (
-        <div className="p-3 bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-400 rounded">
+        <div className="p-3 bg-green-50 text-green-700 rounded">
           {state.message}
         </div>
       )}
@@ -121,12 +121,12 @@ function FormWithTransition() {
         {isPending ? "제출 중..." : "제출"}
       </button>
       {error && (
-        <div className="p-3 bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-400 rounded">
+        <div className="p-3 bg-red-50 text-red-700 rounded">
           {error}
         </div>
       )}
       {message && (
-        <div className="p-3 bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-400 rounded">
+        <div className="p-3 bg-green-50 text-green-700 rounded">
           {message}
         </div>
       )}
@@ -137,11 +137,11 @@ function FormWithTransition() {
 export function ActionsDemo() {
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Server Actions & Form Actions의 특징:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">action</code> prop으로 서버 함수 직접 연결</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">useActionState</code>로 폼 상태 관리 간소화</li>
+          <li><code className="bg-white px-1 rounded">action</code> prop으로 서버 함수 직접 연결</li>
+          <li><code className="bg-white px-1 rounded">useActionState</code>로 폼 상태 관리 간소화</li>
           <li>자동으로 FormData 처리</li>
           <li>서버 컴포넌트와의 통합이 더 자연스러움</li>
         </ul>
@@ -159,10 +159,10 @@ export function ActionsDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
+      <div className="p-4 bg-yellow-50 rounded-lg">
         <p className="text-sm">
           <strong>참고:</strong> 실제 프로덕션에서는 Server Action에
-          <code className="bg-white dark:bg-gray-800 px-1 rounded">'use server'</code> 지시어를 사용하여
+          <code className="bg-white px-1 rounded">'use server'</code> 지시어를 사용하여
           서버에서만 실행되도록 해야 합니다.
         </p>
       </div>

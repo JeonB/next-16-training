@@ -41,13 +41,13 @@ export async function SSRPatternDemo() {
 
   return (
     <div className="space-y-4">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">SSR/SSG 패턴의 특징:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>Server Component에서 데이터를 직접 가져옴</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">setQueryData</code>로 캐시에 설정</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">dehydrate</code>로 상태 직렬화</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">HydrationBoundary</code>로 클라이언트에 전달</li>
+          <li><code className="bg-white px-1 rounded">setQueryData</code>로 캐시에 설정</li>
+          <li><code className="bg-white px-1 rounded">dehydrate</code>로 상태 직렬화</li>
+          <li><code className="bg-white px-1 rounded">HydrationBoundary</code>로 클라이언트에 전달</li>
           <li>SSR: 매 요청마다 서버에서 렌더링</li>
           <li>SSG: 빌드 시점에 정적 HTML 생성</li>
         </ul>
@@ -57,7 +57,7 @@ export async function SSRPatternDemo() {
         <SSRClientComponent />
       </HydrationBoundary>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">실전 활용:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>블로그 포스트 목록 (SSG: 빌드 시 생성)</li>

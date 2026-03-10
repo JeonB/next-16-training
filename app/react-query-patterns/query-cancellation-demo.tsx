@@ -44,17 +44,17 @@ function SearchResults({ query }: { query: string }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">
           {error instanceof Error && error.message === "Query was cancelled"
             ? "검색이 취소되었습니다."
             : "에러 발생"}
@@ -65,7 +65,7 @@ function SearchResults({ query }: { query: string }) {
 
   if (!data || data.length === 0) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900">
+      <div className="p-4 border rounded-lg bg-gray-50">
         <p className="text-muted-foreground">검색 결과가 없습니다.</p>
       </div>
     );
@@ -79,10 +79,10 @@ function SearchResults({ query }: { query: string }) {
       {data.map((result) => (
         <div
           key={result.id}
-          className="p-4 border rounded-lg bg-white dark:bg-gray-800 hover:shadow-md transition-shadow"
+          className="p-4 border rounded-lg bg-white hover:shadow-md transition-shadow"
         >
           <h3 className="font-semibold mb-1">{result.title}</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">{result.description}</p>
+          <p className="text-sm text-gray-600">{result.description}</p>
         </div>
       ))}
     </div>
@@ -104,7 +104,7 @@ export function QueryCancellationDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Query Cancellation의 특징:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>컴포넌트 언마운트 시 자동으로 쿼리 취소</li>
@@ -133,7 +133,7 @@ export function QueryCancellationDemo() {
 
       {debouncedQuery && <SearchResults query={debouncedQuery} />}
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">실전 활용:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>검색 입력 필드 (자동 취소)</li>

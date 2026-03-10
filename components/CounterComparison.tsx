@@ -15,7 +15,7 @@ export default function CounterComparison() {
     <div className="space-y-8 p-8">
       <div className="text-center space-y-4">
         <h1 className="text-3xl font-bold">React 19.2 최적화 비교</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600">
           React 19.2와 Next.js 16에서는 React Compiler가 자동으로 메모이제이션을
           처리합니다
         </p>
@@ -28,7 +28,7 @@ export default function CounterComparison() {
           </button>
         </div>
         {showProfiling && (
-          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-left">
+          <div className="bg-gray-100 p-4 rounded-lg text-left">
             <p className="text-sm">
               <strong>렌더링 횟수:</strong> {renderCountRef.current}
             </p>
@@ -39,7 +39,7 @@ export default function CounterComparison() {
       <div className="grid md:grid-cols-2 gap-8">
         <div>
           <CounterOptimized />
-          <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded">
+          <div className="mt-4 p-4 bg-yellow-50 rounded">
             <p className="text-sm font-semibold mb-2">수동 최적화 버전</p>
             <ul className="text-xs space-y-1 list-disc list-inside">
               <li>useMemo로 count 메모이제이션</li>
@@ -51,7 +51,7 @@ export default function CounterComparison() {
 
         <div>
           <CounterUnoptimized />
-          <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded">
+          <div className="mt-4 p-4 bg-green-50 rounded">
             <p className="text-sm font-semibold mb-2">
               자동 최적화 버전 (React 19.2)
             </p>
@@ -64,7 +64,7 @@ export default function CounterComparison() {
         </div>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+      <div className="bg-blue-50 p-6 rounded-lg">
         <h3 className="font-bold mb-2">성능 측정 방법:</h3>
         <ol className="list-decimalㅌㅌㅌㅌㅌㅌ list-inside space-y-2 text-sm">
           <li>브라우저에서 React DevTools 확장 프로그램 설치</li>

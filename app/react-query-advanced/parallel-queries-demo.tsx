@@ -72,7 +72,7 @@ export function ParallelQueriesDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useQueries의 특징:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>여러 쿼리를 동적으로 생성하고 실행</li>
@@ -84,7 +84,7 @@ export function ParallelQueriesDemo() {
       </div>
 
       {/* 상태 표시 */}
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900">
+      <div className="p-4 border rounded-lg bg-gray-50">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <span className="text-muted-foreground">Users 로딩:</span>
@@ -119,17 +119,17 @@ export function ParallelQueriesDemo() {
 
           if (userQuery.isLoading) {
             return (
-              <div key={userId} className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+              <div key={userId} className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+                <div className="h-6 bg-gray-200 rounded w-1/3 mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
               </div>
             );
           }
 
           if (userQuery.isError) {
             return (
-              <div key={userId} className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-                <p className="text-red-700 dark:text-red-400">
+              <div key={userId} className="p-4 border rounded-lg bg-red-50">
+                <p className="text-red-700">
                   User {userId} 로딩 실패
                 </p>
               </div>
@@ -140,11 +140,11 @@ export function ParallelQueriesDemo() {
           if (!user) return null;
 
           return (
-            <div key={userId} className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+            <div key={userId} className="p-4 border rounded-lg bg-white">
               <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-1">{user.name}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">{user.email}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">{user.phone}</p>
+                <p className="text-sm text-gray-600">{user.email}</p>
+                <p className="text-sm text-gray-600">{user.phone}</p>
               </div>
 
               <div>
@@ -161,7 +161,7 @@ export function ParallelQueriesDemo() {
                         className={`text-sm ${
                           todo.completed
                             ? "line-through text-gray-400"
-                            : "text-gray-700 dark:text-gray-300"
+                            : "text-gray-700"
                         }`}
                       >
                         {todo.completed ? "✓" : "○"} {todo.title}
@@ -177,7 +177,7 @@ export function ParallelQueriesDemo() {
         })}
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">실전 활용:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>대시보드: 여러 위젯 데이터 동시 로딩</li>

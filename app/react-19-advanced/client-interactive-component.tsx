@@ -17,12 +17,12 @@ export function ClientInteractiveComponent({ initialCount }: ClientInteractiveCo
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="text-lg font-semibold mb-4">Client Component (인터랙션)</h3>
 
       <div className="space-y-4">
         <div>
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          <p className="text-sm text-gray-600 mb-2">
             카운터: <span className="font-semibold text-lg">{count}</span>
           </p>
           <div className="flex space-x-2">
@@ -60,8 +60,8 @@ export function ClientInteractiveComponent({ initialCount }: ClientInteractiveCo
         </div>
       </div>
 
-      <div className="mt-4 p-3 bg-purple-50 dark:bg-purple-950 rounded">
-        <p className="text-sm text-purple-700 dark:text-purple-300">
+      <div className="mt-4 p-3 bg-purple-50 rounded">
+        <p className="text-sm text-purple-700">
           ✅ 이 컴포넌트는 클라이언트에서 렌더링되며 인터랙션을 처리합니다.
         </p>
         <p className="text-xs text-muted-foreground mt-1">

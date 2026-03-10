@@ -18,7 +18,7 @@ export default function ReactQueryBasicsPage() {
         <p className="text-lg text-muted-foreground mb-2">
           TanStack Query v5의 핵심 개념을 단계별로 학습합니다.
         </p>
-        <div className="mt-4 p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
+        <div className="mt-4 p-4 bg-purple-50 rounded-lg">
           <h2 className="font-semibold mb-2">학습 내용:</h2>
           <ul className="list-disc list-inside space-y-1 text-sm">
             <li>기본 Query 사용법 (useQuery)</li>
@@ -35,7 +35,7 @@ export default function ReactQueryBasicsPage() {
         <section className="border-b pb-12">
           <h2 className="text-3xl font-bold mb-4">1. 기본 Query (useQuery)</h2>
           <p className="text-muted-foreground mb-6">
-            <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">useQuery</code>는
+            <code className="bg-gray-100 px-1 rounded">useQuery</code>는
             서버에서 데이터를 가져오고 캐싱하는 가장 기본적인 훅입니다.
           </p>
           <QueryBasicsDemo />
@@ -53,7 +53,7 @@ export default function ReactQueryBasicsPage() {
         <section className="border-b pb-12">
           <h2 className="text-3xl font-bold mb-4">3. Mutation (useMutation)</h2>
           <p className="text-muted-foreground mb-6">
-            <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">useMutation</code>는
+            <code className="bg-gray-100 px-1 rounded">useMutation</code>는
             서버의 데이터를 생성, 수정, 삭제하는 작업을 처리합니다.
           </p>
           <MutationBasicsDemo />

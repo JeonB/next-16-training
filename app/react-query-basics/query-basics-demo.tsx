@@ -44,11 +44,11 @@ function PostDetail({ postId }: { postId: string }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900">
+      <div className="p-4 border rounded-lg bg-gray-50">
         <div className="animate-pulse space-y-2">
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+          <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded w-5/6"></div>
         </div>
       </div>
     );
@@ -56,8 +56,8 @@ function PostDetail({ postId }: { postId: string }) {
 
   if (isError) {
     return (
-      <div className="p-4 border rounded-lg bg-red-50 dark:bg-red-950">
-        <p className="text-red-700 dark:text-red-400">
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-700">
           에러 발생: {error instanceof Error ? error.message : "Unknown error"}
         </p>
         <button
@@ -76,14 +76,14 @@ function PostDetail({ postId }: { postId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+      <div className="p-4 border rounded-lg bg-white">
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-xl font-bold">{data.title}</h3>
           {isFetching && (
             <span className="text-xs text-blue-500">업데이트 중...</span>
           )}
         </div>
-        <p className="text-gray-600 dark:text-gray-300">{data.body}</p>
+        <p className="text-gray-600">{data.body}</p>
         <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
           <span>Post ID: {data.id}</span>
           <span>User ID: {data.userId}</span>
@@ -105,17 +105,17 @@ export function QueryBasicsDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">useQuery의 주요 속성:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">data</code>: 쿼리 결과 데이터</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isLoading</code>: 첫 로딩 중 (캐시가 없을 때)</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isFetching</code>: 백그라운드 리페치 중</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isError</code>: 에러 발생 여부</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">isSuccess</code>: 성공적으로 데이터를 가져왔는지</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">refetch</code>: 수동 리페치 함수</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">staleTime</code>: 데이터가 fresh로 유지되는 시간</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">gcTime</code>: 캐시가 메모리에 유지되는 시간</li>
+          <li><code className="bg-white px-1 rounded">data</code>: 쿼리 결과 데이터</li>
+          <li><code className="bg-white px-1 rounded">isLoading</code>: 첫 로딩 중 (캐시가 없을 때)</li>
+          <li><code className="bg-white px-1 rounded">isFetching</code>: 백그라운드 리페치 중</li>
+          <li><code className="bg-white px-1 rounded">isError</code>: 에러 발생 여부</li>
+          <li><code className="bg-white px-1 rounded">isSuccess</code>: 성공적으로 데이터를 가져왔는지</li>
+          <li><code className="bg-white px-1 rounded">refetch</code>: 수동 리페치 함수</li>
+          <li><code className="bg-white px-1 rounded">staleTime</code>: 데이터가 fresh로 유지되는 시간</li>
+          <li><code className="bg-white px-1 rounded">gcTime</code>: 캐시가 메모리에 유지되는 시간</li>
         </ul>
       </div>
 
@@ -138,7 +138,7 @@ export function QueryBasicsDemo() {
 
       <PostDetail postId={postId} />
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">캐싱 동작:</h3>
         <ol className="list-decimal list-inside space-y-1 text-sm">
           <li>같은 queryKey로 요청하면 캐시된 데이터를 즉시 반환</li>

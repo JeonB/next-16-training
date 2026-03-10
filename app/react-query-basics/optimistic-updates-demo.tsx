@@ -134,10 +134,10 @@ function CommentList() {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
         <div className="space-y-3">
-          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div className="h-16 bg-gray-200 rounded"></div>
+          <div className="h-16 bg-gray-200 rounded"></div>
         </div>
       </div>
     );
@@ -171,8 +171,8 @@ function CommentList() {
             key={comment.id}
             className={`p-4 border rounded-lg ${
               comment.id.startsWith("temp-")
-                ? "bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800"
-                : "bg-white dark:bg-gray-800"
+                ? "bg-blue-50 border-blue-200"
+                : "bg-white"
             }`}
           >
             <div className="flex items-start justify-between">
@@ -183,7 +183,7 @@ function CommentList() {
                     <span className="text-xs text-blue-500">추가 중...</span>
                   )}
                 </div>
-                <p className="text-gray-700 dark:text-gray-300">{comment.text}</p>
+                <p className="text-gray-700">{comment.text}</p>
                 <p className="text-xs text-gray-500 mt-1">
                   {new Date(comment.createdAt).toLocaleString()}
                 </p>
@@ -206,12 +206,12 @@ function CommentList() {
 export function OptimisticUpdatesDemo() {
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">Optimistic Updates 패턴:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">onMutate</code>: Mutation 실행 전 즉시 UI 업데이트</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">onError</code>: 에러 발생 시 이전 상태로 롤백</li>
-          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">onSettled</code>: 최종적으로 서버 상태와 동기화</li>
+          <li><code className="bg-white px-1 rounded">onMutate</code>: Mutation 실행 전 즉시 UI 업데이트</li>
+          <li><code className="bg-white px-1 rounded">onError</code>: 에러 발생 시 이전 상태로 롤백</li>
+          <li><code className="bg-white px-1 rounded">onSettled</code>: 최종적으로 서버 상태와 동기화</li>
           <li>서버 응답을 기다리지 않아 사용자 경험 향상</li>
           <li>에러 발생 시 자동 롤백으로 일관성 유지</li>
         </ul>
@@ -219,7 +219,7 @@ export function OptimisticUpdatesDemo() {
 
       <CommentList />
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">동작 흐름:</h3>
         <ol className="list-decimal list-inside space-y-1 text-sm">
           <li>사용자가 액션 수행 (댓글 추가, 삭제 등)</li>

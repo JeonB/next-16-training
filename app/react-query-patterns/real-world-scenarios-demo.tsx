@@ -106,9 +106,9 @@ function PostWithOptimisticLike({ postId }: { postId: number }) {
   if (!post) return null;
 
   return (
-    <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+    <div className="p-4 border rounded-lg bg-white">
       <h3 className="text-lg font-semibold mb-2">{post.title}</h3>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{post.content}</p>
+      <p className="text-sm text-gray-600 mb-3">{post.content}</p>
       <div className="flex items-center space-x-4">
         <button
           onClick={() => likeMutation.mutate()}
@@ -157,26 +157,26 @@ function CommentsSection({ postId }: { postId: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 animate-pulse">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+      <div className="p-4 border rounded-lg bg-gray-50 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-4">
-      <div className="p-4 border rounded-lg bg-white dark:bg-gray-800">
+      <div className="p-4 border rounded-lg bg-white">
         <h4 className="font-semibold mb-3">댓글 ({comments?.length || 0}개):</h4>
         {comments && comments.length > 0 ? (
           <div className="space-y-2">
             {comments.map((comment) => (
-              <div key={comment.id} className="p-2 border rounded bg-gray-50 dark:bg-gray-900">
+              <div key={comment.id} className="p-2 border rounded bg-gray-50">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-medium">{comment.author}</span>
                   <span className="text-xs text-muted-foreground">{comment.likes} 좋아요</span>
                 </div>
-                <p className="text-sm text-gray-700 dark:text-gray-300">{comment.text}</p>
+                <p className="text-sm text-gray-700">{comment.text}</p>
               </div>
             ))}
           </div>
@@ -219,7 +219,7 @@ export function RealWorldScenariosDemo() {
 
   return (
     <div className="space-y-6">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+      <div className="p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold mb-2">실전 시나리오 패턴:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li><strong>Optimistic Update:</strong> 즉시 UI 업데이트 후 서버 동기화</li>
@@ -262,7 +262,7 @@ export function RealWorldScenariosDemo() {
         </div>
       </div>
 
-      <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+      <div className="p-4 bg-green-50 rounded-lg">
         <h3 className="font-semibold mb-2">Best Practices:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm">
           <li>낙관적 업데이트는 중요하지 않은 작업에 사용 (좋아요, 댓글 등)</li>

@@ -38,9 +38,9 @@ export default function Counter() {
         <Button onClick={handleReset}>Reset</Button>
       </div>
       <p className="text-lg">Count: {count}</p>
-      <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded text-sm">
+      <div className="mt-4 p-4 bg-green-50 rounded text-sm">
         <p className="font-semibold mb-1">React 19.2 자동 최적화</p>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600">
           이 컴포넌트는 useCallback이나 useMemo 없이 작성되었지만, React
           Compiler가 자동으로 최적화를 처리합니다.
         </p>
