@@ -4,27 +4,11 @@
  */
 
 import Link from "next/link";
-import {
-  getUnboundedCacheSize,
-  getRequestContextLogLength,
-  isLeakyIntervalRunning,
-  getLeakyIntervalTickCount,
-} from "@/lib/data/memory-leak-demo-store";
+import { StatsPanel } from "./stats-panel";
 
-const API_BASE = "http://localhost:3000/api/memory-leak-demo";
-
-function getStats() {
-  return {
-    unboundedCacheSize: getUnboundedCacheSize(),
-    requestContextLogLength: getRequestContextLogLength(),
-    leakyIntervalRunning: isLeakyIntervalRunning(),
-    leakyIntervalTickCount: getLeakyIntervalTickCount(),
-  };
-}
+const API_BASE = "/api/memory-leak-demo";
 
 export default function MemoryLeakDemoPage() {
-  const stats = getStats();
-
   return (
     <div className="min-h-screen p-8 font-sans">
       <div className="mx-auto max-w-2xl space-y-6">
@@ -42,18 +26,7 @@ export default function MemoryLeakDemoPage() {
           </p>
         </div>
 
-        <section className="rounded-lg border bg-white p-4">
-          <h2 className="mb-2 font-semibold">현재 상태 (서버 메모리 데모)</h2>
-          <ul className="space-y-1 text-sm">
-            <li>무제한 캐시 크기: {stats.unboundedCacheSize}</li>
-            <li>요청 로그 배열 길이: {stats.requestContextLogLength}</li>
-            <li>
-              Leaky setInterval 실행 중:{" "}
-              {stats.leakyIntervalRunning ? "예" : "아니오"}
-            </li>
-            <li>Leaky interval tick 수: {stats.leakyIntervalTickCount}</li>
-          </ul>
-        </section>
+        <StatsPanel />
 
         <section className="rounded-lg border bg-white p-4">
           <h2 className="mb-2 font-semibold">
