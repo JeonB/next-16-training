@@ -41,7 +41,7 @@ function SubmitButton() {
       </button>
       {pending && (
         <p className="text-sm text-muted-foreground">
-          폼이 제출 중입니다... (method: {method}, action: {action || "현재 URL"})
+          폼이 제출 중입니다... (method: {method}, action: {typeof action === "string" ? action : "현재 URL"})
         </p>
       )}
     </div>
@@ -51,7 +51,7 @@ function SubmitButton() {
 // useFormState를 사용하는 폼 컴포넌트
 function CommentForm() {
   // useFormState: 폼의 상태와 액션을 관리
-  const [state, formAction] = useFormState(submitComment, { message: "" });
+  const [state, formAction] = useFormState(submitComment, { message: "", error: undefined });
 
   return (
     <form action={formAction} className="space-y-4">

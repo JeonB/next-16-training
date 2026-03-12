@@ -146,6 +146,6 @@ export async function getUserStats(): Promise<UserStatsSummary> {
 /**
  * 캐시 무효화
  */
-export function revalidateUserStats() {
+export async function revalidateUserStats() {
   revalidateTag(USER_STATS_TAG, "max");
 }

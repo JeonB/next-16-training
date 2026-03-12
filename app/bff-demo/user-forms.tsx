@@ -50,8 +50,8 @@ const Feedback = ({ state }: FeedbackProps) => {
     <p
       className={
         state.ok
-          ? `${baseStyle} bg-green-50 text-green-800 border-green-200
-          : `${baseStyle} bg-red-50 text-red-800 border-red-200
+          ? `${baseStyle} bg-green-50 text-green-800 border-green-200`
+          : `${baseStyle} bg-red-50 text-red-800 border-red-200`
       }
     >
       {state.message}

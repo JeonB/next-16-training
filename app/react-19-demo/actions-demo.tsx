@@ -8,8 +8,13 @@ import { useState, useTransition } from "react";
  * action prop을 통한 서버 함수 직접 연결
  */
 
-// Server Action (실제로는 'use server'가 필요하지만, 클라이언트 컴포넌트에서는 시뮬레이션)
-async function submitForm(formData: FormData) {
+type FormState =
+  | { success: false; error: string }
+  | { success: true; message: string }
+  | null;
+
+// useActionState용: (prevState, formData) 시그니처
+async function submitForm(_prevState: FormState, formData: FormData): Promise<FormState> {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const name = formData.get("name") as string;
@@ -24,6 +29,11 @@ async function submitForm(formData: FormData) {
   }
 
   return { success: true, message: `환영합니다, ${name}님!` };
+}
+
+// useTransition용: FormData만 받는 래퍼
+async function submitFormForTransition(formData: FormData): Promise<FormState> {
+  return submitForm(null, formData);
 }
 
 // useActionState를 사용한 폼 (React 19)
@@ -60,7 +70,7 @@ function FormWithActionState() {
       >
         {isPending ? "제출 중..." : "제출"}
       </button>
-      {state?.error && (
+      {state && !state.success && state.error && (
         <div className="p-3 bg-red-50 text-red-700 rounded">
           {state.error}
         </div>
@@ -84,11 +94,13 @@ function FormWithTransition() {
     startTransition(async () => {
       setError(null);
       setMessage(null);
-      const result = await submitForm(formData);
-      if (result.success) {
-        setMessage(result.message || "성공!");
-      } else {
-        setError(result.error || "오류 발생");
+      const result = await submitFormForTransition(formData);
+      if (result) {
+        if (result.success) {
+          setMessage(result.message || "성공!");
+        } else {
+          setError(result.error || "오류 발생");
+        }
       }
     });
   }

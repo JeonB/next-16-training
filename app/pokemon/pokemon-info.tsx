@@ -21,7 +21,7 @@ const typeColors: Record<string, string> = {
   rock: "bg-yellow-800",
   ghost: "bg-purple-700",
   dragon: "bg-indigo-700",
-  "bg-gray-800",
+  dark: "bg-gray-800",
   steel: "bg-gray-500",
   fairy: "bg-pink-300",
 };
