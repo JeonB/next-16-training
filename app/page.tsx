@@ -52,6 +52,9 @@ export default function Home() {
         <Link className="text-blue-500" href="/memory-leak-demo">
           [데모] 서버 메모리 누수 점검
         </Link>
+        <Link className="text-blue-500" href="/query-client-singleton-demo">
+          [데모] QueryClient 싱글톤 문제 재현
+        </Link>
       </main>
     </div>
   );
