@@ -1,5 +1,6 @@
 import { InfiniteQueriesDemo } from "./infinite-queries-demo";
 import { ParallelQueriesDemo } from "./parallel-queries-demo";
+import { UseQueriesMinimalExample } from "./use-queries-minimal-example";
 import { DependentQueriesDemo } from "./dependent-queries-demo";
 import { PrefetchingDemo } from "./prefetching-demo";
 import { SuspenseIntegrationDemo } from "./suspense-integration-demo";
@@ -45,6 +46,10 @@ export default function ReactQueryAdvancedPage() {
             <code className="bg-gray-100 px-1 rounded">useQueries</code>를 사용하여
             여러 쿼리를 동시에 실행하고 관리합니다.
           </p>
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold mb-3">따라하기: useQueries 최소 예제</h3>
+            <UseQueriesMinimalExample />
+          </div>
           <ParallelQueriesDemo />
         </section>
 
