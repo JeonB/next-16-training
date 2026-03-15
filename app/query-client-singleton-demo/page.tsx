@@ -10,7 +10,11 @@
  */
 
 import Link from "next/link";
-import { getSingletonQueryClient } from "@/lib/demo/singleton-query-client";
+import {
+  getSingletonQueryClient,
+  getLastRequestedUserId,
+  setLastRequestedUserId,
+} from "@/lib/demo/singleton-query-client";
 import { getUserById } from "@/lib/actions/user-actions";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { SingletonDemoClient, DEMO_QUERY_KEY_PREFIX } from "./singleton-demo-client";
@@ -38,24 +42,17 @@ export default async function QueryClientSingletonDemoPage({
     queryFn: () => getDemoUser(userId),
   });
 
-  const cache = queryClient.getQueryCache();
-  const allQueries = cache.getAll();
   const leakedUsers: DemoUser[] = [];
-
-  for (const query of allQueries) {
-    const key = query.queryKey;
-    if (
-      Array.isArray(key) &&
-      key[0] === DEMO_QUERY_KEY_PREFIX &&
-      key[1] !== userId &&
-      typeof key[1] === "string"
-    ) {
-      const data = query.state.data as DemoUser | undefined;
-      if (data && data.id && data.name && data.email) {
-        leakedUsers.push(data);
-      }
+  const prevUserId = getLastRequestedUserId();
+  if (prevUserId != null && prevUserId !== userId) {
+    const cache = queryClient.getQueryCache();
+    const prevQuery = cache.find({ queryKey: [DEMO_QUERY_KEY_PREFIX, prevUserId] });
+    const data = prevQuery?.state.data as DemoUser | undefined;
+    if (data?.id && data?.name && data?.email) {
+      leakedUsers.push(data);
     }
   }
+  setLastRequestedUserId(userId);
 
   return (
     <div className="min-h-screen p-8 font-sans">
@@ -70,8 +67,9 @@ export default async function QueryClientSingletonDemoPage({
         <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
           <p className="text-sm text-amber-800">
             이 페이지는 서버에서 <strong>의도적으로</strong> QueryClient 싱글톤을
-            사용합니다. ?userId=1 접속 후 ?userId=2 로 이동하면, 두 번째 요청
-            응답에 user 1 데이터가 포함된 것을 확인할 수 있습니다.
+            사용합니다. <strong>먼저 userId=1을 누른 뒤, 이어서 userId=2</strong>를
+            누르면, 두 번째 화면에 “이 요청에 포함된 다른 사용자 데이터”로 user 1이
+            표시됩니다. (처음부터 userId=2만 누르면 유출 영역은 비어 있습니다.)
           </p>
         </div>
 

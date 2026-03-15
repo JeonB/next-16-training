@@ -23,6 +23,20 @@ function makeQueryClient() {
 let singletonQueryClient: QueryClient | undefined = undefined;
 
 /**
+ * 직전 요청의 userId. 데모에서 "1 → 2 이동 시에만" 유출을 보여주기 위해 사용.
+ * 처음부터 2만 열면 유출 영역에 아무도 안 나옴.
+ */
+let lastRequestedUserId: string | null = null;
+
+export function getLastRequestedUserId(): string | null {
+  return lastRequestedUserId;
+}
+
+export function setLastRequestedUserId(userId: string): void {
+  lastRequestedUserId = userId;
+}
+
+/**
  * 서버/클라이언트 모두 동일한 인스턴스를 재사용합니다.
  * 서버에서 사용 시 요청 간 캐시가 공유되어 다른 사용자 데이터가 유출될 수 있습니다.
  */

@@ -21,8 +21,10 @@ Next.js App Router에서 React Query를 쓰면, **서버에서** `getQueryClient
 
 ## 재현 시나리오
 
-1. `/query-client-singleton-demo?userId=1` 접속
-2. 같은 브라우저에서 `/query-client-singleton-demo?userId=2` 로 이동 (또는 새 탭에서 접속)
-3. 두 번째 화면에서 “⚠️ 이 요청에 포함된 다른 사용자 데이터” 영역에 user 1(홍길동)이 보이면 재현된 것입니다.
+1. `/query-client-singleton-demo?userId=1` 접속 (또는 화면에서 **userId=1** 링크 클릭)
+2. 같은 브라우저에서 **userId=2** 링크를 눌러 `/query-client-singleton-demo?userId=2` 로 이동
+3. 두 번째 화면에서 “⚠️ 이 요청에 포함된 다른 사용자 데이터” 영역에 **user 1(홍길동)** 이 보이면 재현된 것입니다.
+
+참고: **처음부터 userId=2만** 열면 “직전 요청”이 없으므로 유출 영역에는 아무도 나오지 않습니다. 반드시 1 → 2 순서로 이동해야 유출이 표시됩니다.
 
 이 데모는 **교육·점검용**이며, 프로덕션에서는 사용하지 마세요.
