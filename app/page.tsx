@@ -1,18 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import iphoneBattle from "../public/iphone-battle.png";
+
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white sm:items-start">
         <Image
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src={iphoneBattle}
+          alt="iphone battle"
           priority
+          className="h-auto w-full"
+          sizes="(max-width: 768px) 100vw, 768px"
         />
 
+        <Link className="text-blue-500" href="/rq-network-benchmark">
+          RQ Network Benchmark (요청 수 비교)
+        </Link>
         <Link className="text-blue-500" href="/bff-demo">
           BFF Demo
         </Link>
